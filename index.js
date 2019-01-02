@@ -24,7 +24,7 @@ const
   mongoose = require('mongoose'),
   app = express().use(body_parser.json()); // creates express http server
 
- var db = mongoose.connect(MONGODB_URI);
+ //var db = mongoose.connect(MONGODB_URI);
  var ChatStatus = require("./models/chatstatus");
 
 // Sets server port and logs message on success
