@@ -24,7 +24,7 @@ const
   mongoose = require('mongoose'),
   app = express().use(body_parser.json()); // creates express http server
 
- //var db = mongoose.connect(MONGODB_URI); 
+ //var db = mongoose.connect(MONGODB_URI);
  var ChatStatus = require("./models/chatstatus");
 
 // Sets server port and logs message on success
@@ -82,7 +82,7 @@ app.get('/webhook', (req, res) => {
   if (mode && token) {
 
     // Check the mode and token sent are correct
-    if (mode === 'subscribe' && token === VERIFY_TOKEN) {
+    if (mode /*=== 'subscribe'*/ && token === VERIFY_TOKEN) {
 
       // Respond with 200 OK and challenge token from the request
       console.log('WEBHOOK_VERIFIED');
@@ -94,27 +94,34 @@ app.get('/webhook', (req, res) => {
     }
   }
 });
-
+//
 function handleMessage(sender_psid, message) {
   // check if it is a location message
   console.log('handleMEssage message:', JSON.stringify(message));
+  let response;
+  if (message.text) {
 
-  const locationAttachment = message && message.attachments && message.attachments.find(a => a.type === 'location');
-  const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
-
-  if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
-    handleMessageWithLocationCoordinates(sender_psid, coordinates.lat, coordinates.long);
-    return;
-  } else if (message.nlp && message.nlp.entities && message.nlp.entities.location && message.nlp.entities.location.find(g => g.confidence > 0.8 && g.suggested)){
-    const locationName = message.nlp.entities.location.find(loc => loc.confidence > 0.8 && loc.suggested);
-    if (locationName.value){
-      const locationNameEncoded = encodeURIComponent(locationName.value);
-      callGeocodingApi(locationNameEncoded, sender_psid, handleConfirmLocation);
+    // Create the payload for a basic text message
+    response = {
+      "text": `You sent the message: "${received_message.text}". Now send me an image!`
     }
-    return;
-  } else if (message.nlp && message.nlp.entities && message.nlp.entities.greetings && message.nlp.entities.greetings.find(g => g.confidence > 0.8 && g.value === 'true')){
-    handlePostback(sender_psid, {payload: GREETING});
-    return;
+//
+//   const locationAttachment = message && message.attachments && message.attachments.find(a => a.type === 'location');
+//   const coordinates = locationAttachment && locationAttachment.payload && locationAttachment.payload.coordinates;
+//
+//   if (coordinates && !isNaN(coordinates.lat) && !isNaN(coordinates.long)){
+//     handleMessageWithLocationCoordinates(sender_psid, coordinates.lat, coordinates.long);
+//     return;
+//   } else if (message.nlp && message.nlp.entities && message.nlp.entities.location && message.nlp.entities.location.find(g => g.confidence > 0.8 && g.suggested)){
+//     const locationName = message.nlp.entities.location.find(loc => loc.confidence > 0.8 && loc.suggested);
+//     if (locationName.value){
+//       const locationNameEncoded = encodeURIComponent(locationName.value);
+//       callGeocodingApi(locationNameEncoded, sender_psid, handleConfirmLocation);
+//     }
+//     return;
+//   } else if (message.nlp && message.nlp.entities && message.nlp.entities.greetings && message.nlp.entities.greetings.find(g => g.confidence > 0.8 && g.value === 'true')){
+//     handlePostback(sender_psid, {payload: GREETING});
+//     return;
   }
 }
 
