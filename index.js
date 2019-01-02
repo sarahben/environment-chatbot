@@ -103,7 +103,7 @@ function handleMessage(sender_psid, message) {
 
     // Create the payload for a basic text message
     response = {
-      "text": `You sent the message: "${received_message.text}". Now send me an image!`
+      "text": `You sent the message: "${message.text}". Now send me an image!`
     }
 //
 //   const locationAttachment = message && message.attachments && message.attachments.find(a => a.type === 'location');
