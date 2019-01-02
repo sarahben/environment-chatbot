@@ -105,6 +105,7 @@ function handleMessage(sender_psid, message) {
     response = {
       "text": `You sent the message: "${message.text}". Now send me an image!`
     }
+    callSendAPI(sender_psid, response);
   }
 //
   const locationAttachment = message && message.attachments && message.attachments.find(a => a.type === 'location');
