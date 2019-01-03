@@ -14,9 +14,12 @@
   "author": "Vivian Chan",
   "license": "ISC",
   "dependencies": {
+    "apiai": "^4.0.3",
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "mongoose": "^5.4.1",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "uuid": "^3.3.2"
   }
 }
