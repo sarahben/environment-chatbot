@@ -169,6 +169,76 @@ const sendTypingOn = (recipientId) => {
   callSendAPI(messageData);
 }
 
+//Send that data to the handleApiAiResponse()
+function handleApiAiResponse(sender, response) {
+  let responseText = response.result.fulfillment.speech;
+  let responseData = response.result.fulfillment.data;
+  let messages = response.result.fulfillment.messages;
+  let action = response.result.action;
+  let contexts = response.result.contexts;
+  let parameters = response.result.parameters;
+
+  // Stop the typing
+  sendTypingOff(sender);
+  if (responseText == "" && !isDefined(action)) {
+    //api ai could not evaluate input.
+    console.log("Unknown query" + response.result.resolvedQuery);
+    sendTextMessage(
+      sender,
+      "I'm not sure what you want. Can you be more specific?" );
+  } else if (isDefined(action)) {
+    handleApiAiAction(sender, action, responseText, contexts, parameters); // A définir
+  } else if (isDefined(responseData) && isDefined(responseData.facebook)) {
+    try {
+      console.log("Response as formatted message" + responseData.facebook);
+      sendTextMessage(sender, responseData.facebook);
+    } catch (err) {
+      sendTextMessage(sender, err.message);
+    }
+  } else if (isDefined(responseText)) {
+    sendTextMessage(sender, responseText);
+  }
+}
+/*
+ * Constants
+ *
+ */
+ //Turn typing indicator off
+const sendTypingOff = (recipientId) => {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    sender_action: "typing_off"
+  };
+
+  callSendAPI(messageData);
+}
+//Whenever we get unknown query from user we have to send Default message to that user.
+const sendTextMessage = async (recipientId, text) => {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: text
+    }
+  };
+  await callSendAPI(messageData);
+}
+// If we get Action from dialogflow response, we are calling the handleApiAiAction().
+function handleApiAiAction(sender, action, responseText, contexts, parameters) {
+   switch (action) {
+    case "send-text":
+      var responseText = "This is example of Text message."
+      sendTextMessage(sender, responseText);
+      break;
+    default:
+      //unhandled action, just send back the text
+    sendTextMessage(sender, responseText);
+  }
+}
+
 function callSendAPI(messageData) {
 // function callSendAPI(sender_psid, response) {
   // //Construct the message body
