@@ -16,12 +16,12 @@ const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 const GOOGLE_GEOCODING_API = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 const MONGODB_URI = process.env.MONGODB_URI;
 const GOOGLE_GEOCODING_API_KEY = process.env.GOOGLE_GEOCODING_API_KEY;
+const DIALOGFLOW_TOKEN = process.env.API_AI_CLIENT_ACCESS_TOKEN;
 
 const
   request = require('request'),
   express = require('express'),
   body_parser = require('body-parser'),
-  mongoose = require('mongoose'),
   apiai = require("apiai"),
   uuid = require("uuid"),
   axios = require('axios'),
@@ -32,6 +32,13 @@ const
 
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+
+// Connect with Dialogflow
+const apiAiService = apiai(DIALOGFLOW_TOKEN, {
+  language: "fr",
+  requestSource: "fb"
+});
+const sessionIds = new Map();
 
 // Accepts POST requests at /webhook endpoint
 app.post('/webhook', (req, res) => {
