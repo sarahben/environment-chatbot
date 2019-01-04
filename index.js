@@ -56,16 +56,9 @@ app.post('/webhook', (req, res) => {
         pageEntry.messaging.forEach((messagingEvent) => {
           console.log({messagingEvent});
           if (messagingEvent.message) {
-            if (messagingEvent.message.quick_reply){
               handlePostback(messagingEvent.sender.id, messagingEvent.message.quick_reply);
-            } else {
-              handleMessage(messagingEvent.sender.id, messagingEvent.message);
-            }
           } else {
-            console.log(
-              'Webhook received unknown messagingEvent: ',
-              messagingEvent
-            );
+            console.log( 'Webhook received unknown messagingEvent: ', messagingEvent );
           }
         });
       });
