@@ -18,6 +18,10 @@ const
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
+/*
+ * GET
+ *
+ */
 // Accepts GET requests at the /webhook endpoint
 app.get('/webhook', (req, res) => {
 
@@ -51,7 +55,10 @@ const apiAiService = apiai(DIALOGFLOW_TOKEN, {
   requestSource: "fb"
 });
 const sessionIds = new Map();  //session DIALOGFLOW
-
+/*
+ * POST
+ *
+ */
 // Accepts POST requests at /webhook endpoint
 app.post('/webhook', (req, res) => {
 
@@ -120,13 +127,14 @@ function handleMessage(event) {
 // Dialogflow part
 function sendToApiAi(sender, text) {
   //we will first call sendTypingOn() to show that bot is typing in Messenger.
-  sendTypingOn(sender);
+  sendTypingOn(sender); // constant sendTypingOn is defined next
+  // apiAiService is the constant defined for the Connection with Dialogflow
   let apiaiRequest = apiAiService.textRequest(text, {
     sessionId: sessionIds.get(sender)
   });
 
   apiaiRequest.on("response", response => {
-    if (isDefined(response.result)) {
+    if (isDefined(response.result)) { //Constant isDefined is defined next
       handleApiAiResponse(sender, response);
     }
   });
@@ -136,9 +144,21 @@ function sendToApiAi(sender, text) {
 }
 
 /*
- * Turn typing indicator on
+ * Constants
  *
  */
+
+// isDefined
+const isDefined = (obj) => {
+  if (typeof obj == "undefined") {
+    return false;
+  }
+  if (!obj) {
+    return false;
+  }
+  return obj != null;
+}
+ // Turn typing indicator on
 const sendTypingOn = (recipientId) => {
   let messageData = {
     recipient: {
