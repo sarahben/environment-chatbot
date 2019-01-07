@@ -234,7 +234,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender, responseText);
       break;
       case "send-image": //"https://ibb.co/KzrjDsz";
-      var imgUrl = "https://ibb.co/KzrjDsz";
+      var imgUrl = "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/881e6651881085.58fd911b65d88.png";
       sendImageMessage(sender, imgUrl);
     default:
       //unhandled action, just send back the text
