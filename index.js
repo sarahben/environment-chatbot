@@ -234,8 +234,27 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender, responseText);
       break;
       case "send-image": //"https://ibb.co/KzrjDsz";
-      var imgUrl = "https://files.slack.com/files-pri/TF51SB729-FF82BHKDG/bienvenue.jpg";
+      var imgUrl = "https://www.dropbox.com/s/i5lk2g7auvdsaxv/bienvenue.jpg?dl=0";
       sendImageMessage(sender, imgUrl);
+      case "send-quick-reply":
+      var responseText = "Que cherchez-vous?"
+      var replies = [{
+        "content_type": "text",
+        "title": "Checking",
+        "payload": "Checking",
+    },
+    {
+        "content_type": "text",
+        "title": "Track bagage",
+        "payload": "Track bagage",
+    },
+    {
+        "content_type": "text",
+        "title": "Flight status",
+        "payload": "Flight status",
+    }];
+    sendQuickReply(sender, responseText, replies)
+break;
     default:
       //unhandled action, just send back the text
     sendTextMessage(sender, responseText);
@@ -257,6 +276,20 @@ const sendImageMessage = async (recipientId, imageUrl) => {
     }
   };
     await callSendAPI(messageData);
+}
+
+const sendQuickReply = async (recipientId, text, replies, metadata) => {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: text,
+      metadata: isDefined(metadata) ? metadata : "",
+      quick_replies: replies
+    }
+  };
+  await callSendAPI(messageData);
 }
 
 function callSendAPI(messageData) {
