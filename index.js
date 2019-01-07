@@ -236,6 +236,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       case "send-image": //"https://ibb.co/KzrjDsz";
       var imgUrl = "https://www.dropbox.com/s/i5lk2g7auvdsaxv/bienvenue.jpg?dl=0";
       sendImageMessage(sender, imgUrl);
+      break;
       case "send-quick-reply":
       var responseText = "Que cherchez-vous?"
       var replies = [{
@@ -254,7 +255,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         "payload": "Flight status",
     }];
     sendQuickReply(sender, responseText, replies)
-break;
+    break;
     default:
       //unhandled action, just send back the text
     sendTextMessage(sender, responseText);
