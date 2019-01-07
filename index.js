@@ -127,7 +127,7 @@ function handleMessage(event) {
 // Dialogflow part
 function sendToApiAi(sender, text) {
   //we will first call sendTypingOn() to show that bot is typing in Messenger.
-  sendTypingOn(sender); // constant sendTypingOn is defined next
+  sendTypingOn(sender.id); // constant sendTypingOn is defined next
   // apiAiService is the constant defined for the Connection with Dialogflow
   let apiaiRequest = apiAiService.textRequest(text, {
     sessionId: sessionIds.get(sender.id)
@@ -159,10 +159,10 @@ const isDefined = (obj) => {
   return obj != null;
 }
  // Turn typing indicator on
-const sendTypingOn = (recipient) => {
+const sendTypingOn = (recipientID) => {
   let messageData = {
     recipient: {
-      id: recipient.id
+      id: recipientID
     },
     sender_action: "typing_on"
   };
@@ -179,7 +179,7 @@ function handleApiAiResponse(sender, response) {
   let parameters = response.result.parameters;
 
   // Stop the typing
-  sendTypingOff(sender);
+  sendTypingOff(sender.id);
   if (responseText == "" && !isDefined(action)) {
     //api ai could not evaluate input.
     console.log("Unknown query" + response.result.resolvedQuery);
@@ -204,10 +204,10 @@ function handleApiAiResponse(sender, response) {
  *
  */
  //Turn typing indicator off
-const sendTypingOff = (recipient.id) => {
+const sendTypingOff = (recipientID) => {
   var messageData = {
     recipient: {
-      id: recipient.id
+      id: recipientID
     },
     sender_action: "typing_off"
   };
@@ -231,11 +231,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "send-text":
       var responseText = `Hello ${sender.name}, this is example of Text message.`
-      sendTextMessage(sender, responseText);
+      sendTextMessage(sender.id, responseText);
       break;
       case "send-image": //"https://ibb.co/KzrjDsz";
       var imgUrl = "https://cdn1.imggmi.com/uploads/2019/1/7/87f7342840d56d0e67c2a0f01a250c7c-full.jpg";
-      sendImageMessage(sender, imgUrl);
+      sendImageMessage(sender.id, imgUrl);
       break;
       case "send-quick-reply":
       var responseText = "Que cherchez-vous?"
@@ -254,11 +254,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         "title": "Flight status",
         "payload": "Flight status",
     }];
-    sendQuickReply(sender, responseText, replies)
+    sendQuickReply(sender.id, responseText, replies)
     break;
     default:
       //unhandled action, just send back the text
-    sendTextMessage(sender, responseText);
+    sendTextMessage(sender.id, responseText);
   }
 }
 
