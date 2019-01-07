@@ -233,10 +233,30 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       var responseText = "This is example of Text message."
       sendTextMessage(sender, responseText);
       break;
+      case "send-image": //"https://ibb.co/KzrjDsz";
+      var imgUrl = "https://royalairmaroc-my.sharepoint.com/:i:/r/personal/sbenfdil_royalairmaroc_com/Documents/bienvenue.jpg?csf=1&e=DoWidh";
+      sendImageMessage(sender, imgUrl);
     default:
       //unhandled action, just send back the text
     sendTextMessage(sender, responseText);
   }
+}
+
+const sendImageMessage = async (recipientId, imageUrl) => {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "image",
+        payload: {
+          url: imageUrl
+        }
+      }
+    }
+  };
+    await callSendAPI(messageData);
 }
 
 function callSendAPI(messageData) {
