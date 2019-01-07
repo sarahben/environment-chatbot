@@ -91,12 +91,12 @@ app.post('/webhook', (req, res) => {
 
 // fonction qui traite le message reçu
 function handleMessage(event) {
-  let senderID = event.sender.id;
+  let sender = event.sender;
   let recipientID = event.recipient.id;
   let message = event.message;
 
-  if (!sessionIds.has(senderID)) {
-    sessionIds.set(senderID, uuid.v1());
+  if (!sessionIds.has(sender.id)) {
+    sessionIds.set(sender.id, uuid.v1());
   }
 
   // You may get a text or attachment but not both
@@ -106,11 +106,11 @@ function handleMessage(event) {
   if (messageText) {
     //send message to api.ai
     message_type = messageText;
-    sendToApiAi(senderID, messageText);
+    sendToApiAi(sender, messageText);
   } else if (messageAttachments) {
     //handle postbacks
     message_type = messagePostback;
-    sendToApiAi(senderID, messagePostback);
+    sendToApiAi(sender, messagePostback);
   }
   // check if it is a locationletssage
   // console.log('handleMEssagletessage:', JSON.stringify(message));
@@ -130,7 +130,7 @@ function sendToApiAi(sender, text) {
   sendTypingOn(sender); // constant sendTypingOn is defined next
   // apiAiService is the constant defined for the Connection with Dialogflow
   let apiaiRequest = apiAiService.textRequest(text, {
-    sessionId: sessionIds.get(sender)
+    sessionId: sessionIds.get(sender.id)
   });
 
   apiaiRequest.on("response", response => {
@@ -159,10 +159,10 @@ const isDefined = (obj) => {
   return obj != null;
 }
  // Turn typing indicator on
-const sendTypingOn = (recipientId) => {
+const sendTypingOn = (recipient) => {
   let messageData = {
     recipient: {
-      id: recipientId
+      id: recipient.id
     },
     sender_action: "typing_on"
   };
@@ -184,7 +184,7 @@ function handleApiAiResponse(sender, response) {
     //api ai could not evaluate input.
     console.log("Unknown query" + response.result.resolvedQuery);
     sendTextMessage(
-      sender,
+      sender.id,
       "I'm not sure what you want. Can you be more specific?" );
   } else if (isDefined(action)) {
     handleApiAiAction(sender, action, responseText, contexts, parameters); // A définir
@@ -204,10 +204,10 @@ function handleApiAiResponse(sender, response) {
  *
  */
  //Turn typing indicator off
-const sendTypingOff = (recipientId) => {
+const sendTypingOff = (recipient.id) => {
   var messageData = {
     recipient: {
-      id: recipientId
+      id: recipient.id
     },
     sender_action: "typing_off"
   };
@@ -230,7 +230,7 @@ const sendTextMessage = async (recipientId, text) => {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "send-text":
-      var responseText = `Hello ${sender.id}, this is example of Text message.`
+      var responseText = `Hello ${sender.name}, this is example of Text message.`
       sendTextMessage(sender, responseText);
       break;
       case "send-image": //"https://ibb.co/KzrjDsz";
