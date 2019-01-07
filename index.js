@@ -230,7 +230,7 @@ const sendTextMessage = async (recipientId, text) => {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "send-text":
-      var responseText = `Hello ${sender.name}, this is example of Text message.`
+      var responseText = `Hello ${sender.id}, this is example of Text message.`
       sendTextMessage(sender, responseText);
       break;
       case "send-image": //"https://ibb.co/KzrjDsz";
