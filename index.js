@@ -15,6 +15,8 @@ const
   axios = require('axios'),
   app = express().use(body_parser.json()); // creates express http server
 
+// Define global variable for message type
+  let message_type;
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
@@ -91,26 +93,24 @@ app.post('/webhook', (req, res) => {
 function handleMessage(event) {
   let senderID = event.sender.id;
   let recipientID = event.recipient.id;
-  let timeOfMessage = event.timestamp;
   let message = event.message;
 
   if (!sessionIds.has(senderID)) {
     sessionIds.set(senderID, uuid.v1());
   }
-  let messageId = message.mid;
-  let appId = message.app_id;
-  let metadata = message.metadata;
 
   // You may get a text or attachment but not both
   let messageText = message.text;
-  let messageAttachments = message.attachments;
+  let messagePostback = message.postback;
 
   if (messageText) {
     //send message to api.ai
+    message_type = messageText;
     sendToApiAi(senderID, messageText);
   } else if (messageAttachments) {
-    //handle the attachments
-    handleMessageAttachments(messageAttachments, senderID);
+    //handle postbacks
+    message_type = messagePostback;
+    sendToApiAi(senderID, messagePostback);
   }
   // check if it is a locationletssage
   // console.log('handleMEssagletessage:', JSON.stringify(message));
@@ -230,7 +230,7 @@ const sendTextMessage = async (recipientId, text) => {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "send-text":
-      var responseText = "This is example of Text message."
+      var responseText = `Hello ${sender.name}, this is example of Text message.`
       sendTextMessage(sender, responseText);
       break;
       case "send-image": //"https://ibb.co/KzrjDsz";
