@@ -234,7 +234,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender, responseText);
       break;
       case "send-image": //"https://ibb.co/KzrjDsz";
-      var imgUrl = "https://www.dropbox.com/s/i5lk2g7auvdsaxv/bienvenue.jpg?dl=0";
+      var imgUrl = "https://cdn1.imggmi.com/uploads/2019/1/7/87f7342840d56d0e67c2a0f01a250c7c-full.jpg";
       sendImageMessage(sender, imgUrl);
       break;
       case "send-quick-reply":
