@@ -234,7 +234,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender, responseText);
       break;
       case "send-image": //"https://ibb.co/KzrjDsz";
-      var imgUrl = "https://royalairmaroc-my.sharepoint.com/:i:/r/personal/sbenfdil_royalairmaroc_com/Documents/bienvenue.jpg?csf=1&e=DoWidh";
+      var imgUrl = "https://ibb.co/KzrjDsz";
       sendImageMessage(sender, imgUrl);
     default:
       //unhandled action, just send back the text
