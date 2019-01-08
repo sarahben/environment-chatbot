@@ -275,46 +275,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         break;
     // Call webservice RAM flight status
     case "Flight_status":
-      let flightstatus = require('./flightStatus');
-      flightstatus.sendFlightstatus(sender.id, responseText);
-      sendTextMessage(sender.id, responseText);
+      sendFlightstatus(sender.id, responseText);
       break;
     default:
       //unhandled action, just send back the text
       sendTextMessage(sender.id, responseText);
   }
 }
-// If we get Action from dialogflow response, we are calling the handleApiAiAction().
-// function handleApiAiAction(sender, action, responseText, contexts, parameters) {
-//   if(message_type == "text"){
-//     // sendTextMessage(sender.id, responseText);
-//     var responseText = "Bonjour, que cherchez-vous? ";
-//     var replies = [{
-//             "content_type": "text",
-//             "title": "Checking",
-//             "payload": "Checking",
-//         },
-//         {
-//             "content_type": "text",
-//             "title": "Track bagage",
-//             "payload": "Track bagage",
-//         },
-//         {
-//             "content_type": "text",
-//             "title": "Flight status",
-//             "payload": "Flight status",
-//         }];
-//         sendQuickReply(sender.id, responseText, replies);
-//   } else if(message_type == "postback"){
-//     switch (action) {
-//       case "Flight_status":
-//       sendTextMessage(sender.id, responseText);
-//       break;
-//     }
-//   }
-//   }
-
-
 
 const sendImageMessage = async (recipientId, imageUrl) => {
   var messageData = {
@@ -345,6 +312,26 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
     }
   };
   await callSendAPI(messageData);
+}
+
+function sendFlightstatus(recipientId, responseText) {
+  var soap = require('soap');
+  var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
+  var args = {FlightNumber: responseText};
+    soap.createClient(url, function(err, client) {
+        client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args,
+           function(err, result) {
+              if(result != null){
+
+              let jsreturn = result.return;
+              if(jsreturn != null){
+
+              let statut = jsreturn[0].statut;
+            }
+          }
+        });
+    });
+    sendTextMessage(recipientId, responseText);
 }
 
 function callSendAPI(messageData) {
