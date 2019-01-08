@@ -267,7 +267,7 @@ const sendTextMessage = async (recipientId, text) => {
 // If we get Action from dialogflow response, we are calling the handleApiAiAction().
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
   if(message_type == "text"){
-    sendTextMessage(sender.id, responseText);
+    // sendTextMessage(sender.id, responseText);
     var responseText = "Que cherchez-vous?"
     var replies = [{
             "content_type": "text",
