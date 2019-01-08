@@ -65,6 +65,7 @@ app.get('/webhook', (req, res) => {
       res.json(fbRes);
     })
     console.log(fbRes.name);
+    username = fbRes.name;
   } //endif
 }); //fin app.get
 
@@ -282,7 +283,7 @@ const sendTextMessage = async (recipientId, text) => {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
   if(message_type == "text"){
     // sendTextMessage(sender.id, responseText);
-    var responseText = "Que cherchez-vous?"
+    var responseText = "Que cherchez-vous? " + username;
     var replies = [{
             "content_type": "text",
             "title": "Checking",
