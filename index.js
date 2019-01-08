@@ -4,7 +4,7 @@ const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 const GOOGLE_GEOCODING_API = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 const MONGODB_URI = process.env.MONGODB_URI;
 const GOOGLE_GEOCODING_API_KEY = process.env.GOOGLE_GEOCODING_API_KEY;
-const DIALOGFLOW_TOKEN = process.env.API_AI_CLIENT_ACCESS_TOKEN;
+const DIALOGFLOW_TOKEN = "4d5ad866b6ff4daabad7f93d8c76e517";// process.env.API_AI_CLIENT_ACCESS_TOKEN;
 
 const
   request = require('request'),
@@ -306,13 +306,20 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
   await callSendAPI(messageData);
 }
 // Fontion dans laquelle est géré le traitement de la récupération du flight number
-function sendFlightnumber(recipientId, responseText) {
+// function sendFlightnumber(recipientId, responseText) {
   //Post for the fullfilments in DIalogflow /ai
     app.post('/ai', (req, res) => {
-      let flight_number = req.body.result.parameters['flight-number'];
+
+      // Return a '200 OK' response to all events
+      res.status(200).send('EVENT_RECEIVED');
+
+      const body = req.body;
+      let flight_number = body.result.parameters['flight-number'];
       let text = "you sent "+ flight_number ;
 
-      sendTextMessage(recipientId, text);
+      console.log(text);
+
+      // sendTextMessage(recipientId, text);
     });
   ///////// Code qui consomme le web service !!
   // var soap = require('soap');
@@ -332,7 +339,7 @@ function sendFlightnumber(recipientId, responseText) {
   //       });
   //   });
   //   sendTextMessage(recipientId, responseText);
-}
+// }
 // Send API de FACEBOOK
 // L'API reçoit un input JSON qu'elle envoie à messenger
 function callSendAPI(messageData) {
