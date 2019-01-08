@@ -17,6 +17,7 @@ const
 
 // Define global variable for message type
   let message_type;
+  let username;
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
@@ -68,7 +69,8 @@ app.post('/webhook', (req, res) => {
   res.status(200).send('EVENT_RECEIVED');
 
   const body = req.body;
-
+  // Username
+   username = body.username;
   if (body.object === 'page') {
       // Iterate over each entry
       // There may be multiple if batched
@@ -107,7 +109,7 @@ function handleMessage(event) {
     //send message to api.ai
     message_type = messageText;
     sendToApiAi(sender, messageText);
-  } else if (messageAttachments) {
+  } else if (messagePostback) {
     //handle postbacks
     message_type = messagePostback;
     sendToApiAi(sender, messagePostback);
@@ -231,7 +233,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "send-text":
       // var responseText = "This is example of Text message."
-      var responseText = "Hello ".concat(sender.phone_number, " here is a text.");
+      var responseText = "Hello ".concat(username, " here is a text.");
       sendTextMessage(sender.id, responseText);
       break;
       case "send-image": //"https://ibb.co/KzrjDsz";
