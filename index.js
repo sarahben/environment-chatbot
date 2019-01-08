@@ -50,8 +50,24 @@ app.get('/webhook', (req, res) => {
       // Responds with '403 Forbidden' if verify tokens do not match
       res.sendStatus(403);
     }
-  }
-});
+    // you need permission for most of these fields
+    const userFieldSet = 'id, name, about, email';
+    const options = {
+    method: 'GET',
+    uri: `https://graph.facebook.com/v2.8/${req.params.id}`,
+    qs: {
+      access_token: user_access_token,
+      fields: userFieldSet
+    }
+  }; //end const options
+  request(options)
+    .then(fbRes => {
+      res.json(fbRes);
+    })
+    console.log(fbRes.name);
+  } //endif
+}); //fin app.get
+
 // Connect with Dialogflow
 const apiAiService = apiai(DIALOGFLOW_TOKEN, {
   language: "fr",
@@ -69,8 +85,6 @@ app.post('/webhook', (req, res) => {
   res.status(200).send('EVENT_RECEIVED');
 
   const body = req.body;
-  // Username
-   username = body.username;
   if (body.object === 'page') {
       // Iterate over each entry
       // There may be multiple if batched
