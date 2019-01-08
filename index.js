@@ -53,10 +53,10 @@ app.get('/webhook', (req, res) => {
     // you need permission for most of these fields
     const userFieldSet = 'id, name, about, email';
     const options = {
-    method: 'GET',
-    uri: `https://graph.facebook.com/v2.8/${req.params.id}`,
+    method: 'GET', // "url": `${FACEBOOK_GRAPH_API_BASE_URL}me
+    url: `${FACEBOOK_GRAPH_API_BASE_URL}${req.params.id}`,
     qs: {
-      access_token: user_access_token,
+      access_token: PAGE_ACCESS_TOKEN,
       fields: userFieldSet
     }
   }; //end const options
