@@ -4,7 +4,7 @@ const FACEBOOK_GRAPH_API_BASE_URL = 'https://graph.facebook.com/v2.6/';
 const GOOGLE_GEOCODING_API = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 const MONGODB_URI = process.env.MONGODB_URI;
 const GOOGLE_GEOCODING_API_KEY = process.env.GOOGLE_GEOCODING_API_KEY;
-const DIALOGFLOW_TOKEN = "4d5ad866b6ff4daabad7f93d8c76e517";// process.env.API_AI_CLIENT_ACCESS_TOKEN;
+const DIALOGFLOW_TOKEN = process.env.API_AI_CLIENT_ACCESS_TOKEN; //"4d5ad866b6ff4daabad7f93d8c76e517";//
 
 const
   request = require('request'),
@@ -306,7 +306,7 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
   await callSendAPI(messageData);
 }
 // Fontion dans laquelle est géré le traitement de la récupération du flight number
-// function sendFlightnumber(recipientId, responseText) {
+function sendFlightnumber(recipientId, responseText) {}
   //Post for the fullfilments in DIalogflow /ai
     app.post('/ai', (req, res) => {
 
