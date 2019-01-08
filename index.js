@@ -107,11 +107,11 @@ function handleMessage(event) {
 
   if (messageText) {
     //send message to api.ai
-    message_type = messageText;
+    message_type = "text";
     sendToApiAi(sender, messageText);
   } else if (messagePostback) {
     //handle postbacks
-    message_type = messagePostback;
+    message_type = "postback";
     sendToApiAi(sender, messagePostback);
   }
   // check if it is a locationletssage
@@ -229,41 +229,67 @@ const sendTextMessage = async (recipientId, text) => {
   await callSendAPI(messageData);
 }
 // If we get Action from dialogflow response, we are calling the handleApiAiAction().
+// function handleApiAiAction(sender, action, responseText, contexts, parameters) {
+//    switch (action) {
+//     case "send-text":
+//       // var responseText = "This is example of Text message."
+//       var responseText = "Hello ".concat(username, " here is a text.");
+//       sendTextMessage(sender.id, responseText);
+//       break;
+//       case "send-image": //"https://ibb.co/KzrjDsz";
+//       var imgUrl = "https://cdn1.imggmi.com/uploads/2019/1/7/87f7342840d56d0e67c2a0f01a250c7c-full.jpg";
+//       sendImageMessage(sender.id, imgUrl);
+//       break;
+//       case "send-quick-reply":
+//       var responseText = "Que cherchez-vous?"
+//       var replies = [{
+//         "content_type": "text",
+//         "title": "Checking",
+//         "payload": "Checking",
+//     },
+//     {
+//         "content_type": "text",
+//         "title": "Track bagage",
+//         "payload": "Track bagage",
+//     },
+//     {
+//         "content_type": "text",
+//         "title": "Flight status",
+//         "payload": "Flight status",
+//     }];
+//     sendQuickReply(sender.id, responseText, replies)
+//     break;
+//     default:
+//       //unhandled action, just send back the text
+//     sendTextMessage(sender.id, responseText);
+//   }
+// }
+// If we get Action from dialogflow response, we are calling the handleApiAiAction().
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
-   switch (action) {
-    case "send-text":
-      // var responseText = "This is example of Text message."
-      var responseText = "Hello ".concat(username, " here is a text.");
-      sendTextMessage(sender.id, responseText);
-      break;
-      case "send-image": //"https://ibb.co/KzrjDsz";
-      var imgUrl = "https://cdn1.imggmi.com/uploads/2019/1/7/87f7342840d56d0e67c2a0f01a250c7c-full.jpg";
-      sendImageMessage(sender.id, imgUrl);
-      break;
-      case "send-quick-reply":
-      var responseText = "Que cherchez-vous?"
-      var replies = [{
-        "content_type": "text",
-        "title": "Checking",
-        "payload": "Checking",
-    },
-    {
-        "content_type": "text",
-        "title": "Track bagage",
-        "payload": "Track bagage",
-    },
-    {
-        "content_type": "text",
-        "title": "Flight status",
-        "payload": "Flight status",
-    }];
-    sendQuickReply(sender.id, responseText, replies)
-    break;
-    default:
-      //unhandled action, just send back the text
+  if(message_type == "text"){
     sendTextMessage(sender.id, responseText);
+    var responseText = "Que cherchez-vous?"
+    var replies = [{
+            "content_type": "text",
+            "title": "Checking",
+            "payload": "Checking",
+        },
+        {
+            "content_type": "text",
+            "title": "Track bagage",
+            "payload": "Track bagage",
+        },
+        {
+            "content_type": "text",
+            "title": "Flight status",
+            "payload": "Flight status",
+        }];
+        sendQuickReply(sender.id, responseText, replies);
   }
-}
+    // switch (action) {}
+  }
+
+
 
 const sendImageMessage = async (recipientId, imageUrl) => {
   var messageData = {
