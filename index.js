@@ -300,8 +300,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
             "payload": "Flight status",
         }];
         sendQuickReply(sender.id, responseText, replies);
+  } else if(message_type == "postback"){
+    switch (action) {
+      case "Flight_status":
+      sendTextMessage(sender.id, responseText);
+      break;
+    }
   }
-    // switch (action) {}
   }
 
 
