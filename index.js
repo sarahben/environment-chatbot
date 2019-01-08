@@ -129,17 +129,6 @@ function handleMessage(event) {
     message_type = "postback";
     sendToApiAi(sender, messagePostback);
   }
-  // check if it is a locationletssage
-  // console.log('handleMEssagletessage:', JSON.stringify(message));
-  // let responlet
-  // if (message.text) {
-  //
-  //   // Create the payload for a basic text message
-  //   response = {
-  //     "text": `You sent the message: "${message.text}". Now send me an image!`
-  //   }
-  //   callSendAPI(sender_psid, response);
-  // }
 }
 // Dialogflow part
 function sendToApiAi(sender, text) {
@@ -275,7 +264,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         break;
     // Call webservice RAM flight status
     case "Flight_status":
-      sendFlightstatus(sender.id, responseText);
+      sendTextMessage(sender.id, responseText);
+      break;
+    case "Flight-number":
+      sendFlightnumber(sender.id, responseText);
       break;
     default:
       //unhandled action, just send back the text
@@ -314,7 +306,7 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
   await callSendAPI(messageData);
 }
 
-function sendFlightstatus(recipientId, responseText) {
+function sendFlightnumber(recipientId, responseText) {
   var soap = require('soap');
   var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
   var args = {FlightNumber: responseText};
