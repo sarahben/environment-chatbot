@@ -305,39 +305,37 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
   };
   await callSendAPI(messageData);
 }
-
+// Fontion dans laquelle est géré le traitement de la récupération du flight number
 function sendFlightnumber(recipientId, responseText) {
-  var soap = require('soap');
-  var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
-  var args = {FlightNumber: responseText};
-    soap.createClient(url, function(err, client) {
-        client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args,
-           function(err, result) {
-              if(result != null){
+  //Post for the fullfilments in DIalogflow /ai
+    app.post('/ai', (req, res) => {
+      let flight_number = req.body.result.parameters['flight-number'];
+      let text = "you sent "+ flight_number ;
 
-              let jsreturn = result.return;
-              if(jsreturn != null){
-
-              let statut = jsreturn[0].statut;
-            }
-          }
-        });
+      sendTextMessage(recipientId, text);
     });
-    sendTextMessage(recipientId, responseText);
+  ///////// Code qui consomme le web service !!
+  // var soap = require('soap');
+  // var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
+  // var args = {FlightNumber: responseText};
+  //   soap.createClient(url, function(err, client) {
+  //       client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args,
+  //          function(err, result) {
+  //             if(result != null){
+  //
+  //             let jsreturn = result.return;
+  //             if(jsreturn != null){
+  //
+  //             let statut = jsreturn[0].statut;
+  //           }
+  //         }
+  //       });
+  //   });
+  //   sendTextMessage(recipientId, responseText);
 }
-
+// Send API de FACEBOOK
+// L'API reçoit un input JSON qu'elle envoie à messenger
 function callSendAPI(messageData) {
-// function callSendAPI(sender_psid, response) {
-  // //Construct the message body
-  // console.log('message to be sent: ', response);
-  // let request_body = {
-  //   "recipient": {
-  //     "id": sender_psid
-  //   },
-  //   "message": response
-  // }
-
-  // Send the HTTP request to the Messenger Platform
   request({
     "url": `${FACEBOOK_GRAPH_API_BASE_URL}me/messages`,
     "qs": { "access_token": PAGE_ACCESS_TOKEN },
