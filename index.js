@@ -112,6 +112,21 @@ app.post('/webhook', (req, res) => {
     res.status(200).send('EVENT_RECEIVED');
 
     const body = req.body;
+    // There may be multiple if batched
+    if (body.entry && body.entry.length <= 0){
+      return;
+    }
+    body.entry.forEach((pageEntry) => {
+      // Iterate over each messaging event and handle accordingly
+      pageEntry.messaging.forEach((messagingEvent) => {
+        console.log({messagingEvent});
+        if (messagingEvent.message) {
+            handleMessage(messagingEvent);
+        } else {
+          console.log( 'Webhook received unknown messagingEvent: ', messagingEvent );
+        }
+      });
+    });
     // let flight_number = body.responses[0].parameters['flight-number'];
     // let text = "you sent "+ flight_number ;
 
@@ -280,7 +295,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       sendTextMessage(sender.id, responseText);
       break;
     case "Flight-number":
-      sendFlightnumber(sender.id, responseText);
+      sendFlightnumber(sender.id, responseText, parameters);
       break;
     default:
       //unhandled action, just send back the text
@@ -319,7 +334,11 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
   await callSendAPI(messageData);
 }
 // Fontion dans laquelle est géré le traitement de la récupération du flight number
-function sendFlightnumber(recipientId, responseText) {}
+function sendFlightnumber(recipientId, responseText, parameters) {
+  let flight_number = parameters.flight;
+  let text = "you sent "+ flight_number ;
+  sendTextMessage(recipientId, text);
+}
 
   ///////// Code qui consomme le web service !!
   // var soap = require('soap');
