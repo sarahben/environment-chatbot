@@ -112,10 +112,10 @@ app.post('/webhook', (req, res) => {
     res.status(200).send('EVENT_RECEIVED');
 
     const body = req.body;
-    let flight_number = body.responses[0].parameters['flight-number'];
-    let text = "you sent "+ flight_number ;
+    // let flight_number = body.responses[0].parameters['flight-number'];
+    // let text = "you sent "+ flight_number ;
 
-    console.log(text);
+    console.log(body);
 
     // sendTextMessage(recipientId, text);
   });
