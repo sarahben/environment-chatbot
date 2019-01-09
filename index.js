@@ -335,30 +335,29 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
 }
 // Fontion dans laquelle est géré le traitement de la récupération du flight number
 function sendFlightnumber(recipientId, responseText, parameters) {
-  let flight_number = parameters.flight.substring(2, 6);
-  let text = "you sent "+ flight_number ;
-  sendTextMessage(recipientId, text);
-}
-
-  ///////// Code qui consomme le web service !!
-  // var soap = require('soap');
-  // var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
-  // var args = {FlightNumber: responseText};
-  //   soap.createClient(url, function(err, client) {
-  //       client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args,
-  //          function(err, result) {
-  //             if(result != null){
-  //
-  //             let jsreturn = result.return;
-  //             if(jsreturn != null){
-  //
-  //             let statut = jsreturn[0].statut;
-  //           }
-  //         }
-  //       });
-  //   });
-  //   sendTextMessage(recipientId, responseText);
+  let flight_number = parameters.flight.replace(/\s+/g, '');
+  // let flight_number = parameters.flight.substring(0, 2) + parameters.flight.substring(2, 6);
+//   sendTextMessage(recipientId, text);
 // }
+  ///////// Code qui consomme le web service !!
+  var soap = require('soap');
+  var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
+  var args = {FlightNumber: flight_number};
+    soap.createClient(url, function(err, client) {
+        client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args,
+           function(err, result) {
+              if(result != null){
+
+              let jsreturn = result.return;
+              if(jsreturn != null){
+
+              let statut = jsreturn[0].statut;
+            }
+          }
+        });
+    });
+    sendTextMessage(recipientId, statut);
+}
 // Send API de FACEBOOK
 // L'API reçoit un input JSON qu'elle envoie à messenger
 function callSendAPI(messageData) {
