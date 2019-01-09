@@ -335,7 +335,7 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
 }
 // Fontion dans laquelle est géré le traitement de la récupération du flight number
 function sendFlightnumber(recipientId, responseText, parameters) {
-  let flight_number = parameters.flight;
+  let flight_number = parameters.flight.substring(2, 6);
   let text = "you sent "+ flight_number ;
   sendTextMessage(recipientId, text);
 }
