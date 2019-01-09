@@ -346,12 +346,11 @@ function sendFlightnumber(recipientId, responseText, parameters) {
     soap.createClient(url, function(err, client) {
         client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args,
            function(err, result) {
+              console.log(result);
               if(result != null){
-
-              let jsreturn = result.return;
+                let jsreturn = result.return;
               if(jsreturn != null){
-
-              let statut = jsreturn[0].statut;
+                let statut = jsreturn[0].statut;
             }
           }
         });
