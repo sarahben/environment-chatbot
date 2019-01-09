@@ -105,7 +105,20 @@ app.post('/webhook', (req, res) => {
       });
     }
 });
+//Post for the fullfilments in DIalogflow /ai
+  app.post('/ai', (req, res) => {
 
+    // Return a '200 OK' response to all events
+    res.status(200).send('EVENT_RECEIVED');
+
+    const body = req.body;
+    let flight_number = body.responses[0].parameters['flight-number'];
+    let text = "you sent "+ flight_number ;
+
+    console.log(text);
+
+    // sendTextMessage(recipientId, text);
+  });
 // fonction qui traite le message reçu
 function handleMessage(event) {
   let sender = event.sender;
@@ -307,20 +320,7 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
 }
 // Fontion dans laquelle est géré le traitement de la récupération du flight number
 function sendFlightnumber(recipientId, responseText) {}
-  //Post for the fullfilments in DIalogflow /ai
-    app.post('/ai', (req, res) => {
 
-      // Return a '200 OK' response to all events
-      res.status(200).send('EVENT_RECEIVED');
-
-      const body = req.body;
-      let flight_number = body.result.parameters['flight-number'];
-      let text = "you sent "+ flight_number ;
-
-      console.log(text);
-
-      // sendTextMessage(recipientId, text);
-    });
   ///////// Code qui consomme le web service !!
   // var soap = require('soap');
   // var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
