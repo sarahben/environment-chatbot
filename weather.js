@@ -20,11 +20,11 @@ options = {
 http.get(options, function(res) {
   res.pipe(process.stdout);
   console.log("status code", "1");
-
+  console.log(options.path);
   var soap = require('soap');
   // var wsdlurl = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
   var args = {FlightNumber: 'AT424'};
-    soap.createClient(options.path, function(err, client) {
+    soap.createClient(options.path, options, function(err, client) {
         client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args, function(err, result) {
             console.log(result);
             // if(result != null){
