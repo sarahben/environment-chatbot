@@ -71,7 +71,7 @@ app.get('/webhook', (req, res) => {
 
 // Connect with Dialogflow
 const apiAiService = apiai(DIALOGFLOW_TOKEN, {
-  language: "fr",
+  // language: "fr",
   requestSource: "fb"
 });
 const sessionIds = new Map();  //session DIALOGFLOW
@@ -288,7 +288,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         sendImageMessage(sender.id, imgUrl);
         break;
       case "input.welcome":
-        var responseText = "Que cherchez-vous?"
+        // var responseText = "Que cherchez-vous?"
         var replies = [{
           "content_type": "text",
           "title": "Checking",
