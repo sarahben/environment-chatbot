@@ -376,11 +376,11 @@ function sendFlightnumber(recipientId, responseText, parameters) {
   var soap = require('soap');
   var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
   var args = {FlightNumber: flight_number};
-  opts = {
+  var opts = {
         wsdl_options: {
             proxy: process.env.QUOTAGUARDSTATIC_URL
             }
-          }
+          };
     soap.createClient(url, function(err, client) {
         client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args,
            function(err, result) {
