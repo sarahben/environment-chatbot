@@ -71,7 +71,7 @@ app.get('/webhook', (req, res) => {
 
 // Connect with Dialogflow
 const apiAiService = apiai(DIALOGFLOW_TOKEN, {
-  // language: "fr",
+  language: {"fr", "en"},
   requestSource: "fb"
 });
 const sessionIds = new Map();  //session DIALOGFLOW
