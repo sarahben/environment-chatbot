@@ -373,7 +373,7 @@ function sendFlightnumber(recipientId, responseText, parameters) {
 //   sendTextMessage(recipientId, text);
 // }
   ///////// Code qui consomme le web service !!
-  var http, options, proxy, url;
+  var http, options, proxy, url, target;
 
   http = require("http");
 
@@ -411,6 +411,7 @@ function sendFlightnumber(recipientId, responseText, parameters) {
       });
 
   });
+  sendTextMessage(recipientId, result);
   // var soap = require('soap');
   // var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
   // var args = {FlightNumber: flight_number};
@@ -432,7 +433,7 @@ function sendFlightnumber(recipientId, responseText, parameters) {
   //         }
   //       });
   //   });
-    sendTextMessage(recipientId, statut);
+    // sendTextMessage(recipientId, statut);
 }
 // Send API de FACEBOOK
 // L'API reçoit un input JSON qu'elle envoie à messenger
