@@ -264,8 +264,24 @@ const sendTextMessage = async (recipientId, text) => {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "send-text":
-        var responseText = "This is example of Text message."
-        sendTextMessage(sender.id, responseText);
+        // var responseText = "This is example of Text message."
+        // sendTextMessage(sender.id, responseText);
+        var replies = [{
+          "content_type": "text",
+          "title": "Checking",
+          "payload": "Checking",
+      },
+      {
+          "content_type": "text",
+          "title": "Track bagage",
+          "payload": "Track bagage",
+      },
+      {
+          "content_type": "text",
+          "title": "Flight status",
+          "payload": "Flight status",
+      }];
+        sendQuickReply(sender.id, responseText, replies)
         break;
       case "send-image": //"https://ibb.co/KzrjDsz";
         var imgUrl = "https://cdn1.imggmi.com/uploads/2019/1/7/87f7342840d56d0e67c2a0f01a250c7c-full.jpg";
@@ -343,6 +359,10 @@ function sendFlightnumber(recipientId, responseText, parameters) {
   var soap = require('soap');
   var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
   var args = {FlightNumber: flight_number};
+  opts = {
+        wsdl_options: {
+            proxy: process.env.QUOTAGUARDSTATIC_URL
+        }
     soap.createClient(url, function(err, client) {
         client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args,
            function(err, result) {
