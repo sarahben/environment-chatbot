@@ -18,7 +18,7 @@ options = {
 };
 
 http.get(options, function(res) {
-  res.pipe(process.stdout);
+  // res.pipe(process.stdout);
   console.log("status code", "1");
   console.log(res);
   var soap = require('soap');
