@@ -71,7 +71,7 @@ app.get('/webhook', (req, res) => {
 
 // Connect with Dialogflow
 const apiAiService = apiai(DIALOGFLOW_TOKEN, {
-  language: {"fr", "en"},
+  language: "fr",
   requestSource: "fb"
 });
 const sessionIds = new Map();  //session DIALOGFLOW
@@ -264,7 +264,7 @@ const sendTextMessage = async (recipientId, text) => {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "input.unknown":
-        // var responseText = "This is example of Text message."
+        var responseText = responseText + "<br>" + "Comment pourrions-nous vous aider?"
         // sendTextMessage(sender.id, responseText);
         var replies = [{
           "content_type": "text",
@@ -287,7 +287,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         var imgUrl = "https://cdn1.imggmi.com/uploads/2019/1/7/87f7342840d56d0e67c2a0f01a250c7c-full.jpg";
         sendImageMessage(sender.id, imgUrl);
         break;
-      case "input.welcome":
+      case "welcome-intent":
         // var responseText = "Que cherchez-vous?"
         var replies = [{
           "content_type": "text",
