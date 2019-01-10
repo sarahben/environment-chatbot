@@ -385,6 +385,7 @@ function sendFlightnumber(recipientId, responseText, parameters) {
         client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args,
            function(err, result) {
               console.log(result);
+              console.log(err);
               if(result != null){
                 let jsreturn = result.return;
               if(jsreturn != null){
