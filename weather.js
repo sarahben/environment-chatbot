@@ -26,7 +26,8 @@ http.get(options, function(res) {
   var args = {FlightNumber: 'AT424'};
   var opts = {
         wsdl_options: {
-            proxy: process.env.QUOTAGUARDSTATIC_URL
+            proxy: proxy.hostname + ":" + proxy.port;//process.env.QUOTAGUARDSTATIC_URL
+            //http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293
             }
           }
     soap.createClient(options.path, opts, function(err, client) {
