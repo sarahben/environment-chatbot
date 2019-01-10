@@ -26,7 +26,7 @@ http.get(options, function(res) {
   var args = {FlightNumber: 'AT424'};
   var opts = {
         wsdl_options: {
-            proxy: "http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293";//process.env.QUOTAGUARDSTATIC_URL
+            proxy: "http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293"//process.env.QUOTAGUARDSTATIC_URL
             //http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293
             }
           }
