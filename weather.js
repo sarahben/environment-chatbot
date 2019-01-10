@@ -19,14 +19,15 @@ options = {
 
 http.get(options, function(res) {
   // res.pipe(process.stdout);
-  console.log("status code", "1");
-  console.log(res);
+  console.log("status code", res);
+  console.log(res); });
+
   var soap = require('soap');
   // var wsdlurl = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
   var args = {FlightNumber: 'AT424'};
   var opts = {
         wsdl_options: {
-            proxy: "http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293"//process.env.QUOTAGUARDSTATIC_URL
+            proxy: process.env.QUOTAGUARDSTATIC_URL
             //http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293
             }
           }
@@ -42,7 +43,7 @@ http.get(options, function(res) {
         });
     });
 
-});
+
 //////PART II
 // var soap = require('soap');
 // var url = 'C:/Users/pc/webhook/flightstatus.xml';
