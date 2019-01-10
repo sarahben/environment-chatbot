@@ -17,7 +17,7 @@ const
 
 // Define global variable for message type
   let message_type;
-  let username;
+  let resultSoap;
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
@@ -401,6 +401,7 @@ function sendFlightnumber(recipientId, responseText, parameters) {
       soap.createClient(wsdlurl, function(err, client) {
           client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args, function(err, result) {
               console.log(result);
+              resultSoap = result;
               // if(result != null){
               // let jsreturn = result.return;
               // console.log(jsreturn);
@@ -411,7 +412,7 @@ function sendFlightnumber(recipientId, responseText, parameters) {
       });
 
   });
-  sendTextMessage(recipientId, result);
+  sendTextMessage(recipientId, resultSoap);
   // var soap = require('soap');
   // var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
   // var args = {FlightNumber: flight_number};
