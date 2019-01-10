@@ -362,7 +362,8 @@ function sendFlightnumber(recipientId, responseText, parameters) {
   opts = {
         wsdl_options: {
             proxy: process.env.QUOTAGUARDSTATIC_URL
-        }
+            }
+          }
     soap.createClient(url, function(err, client) {
         client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args,
            function(err, result) {
