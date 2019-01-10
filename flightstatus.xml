@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://ws.royalairmaroc.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ax21="http://DAO.royalairmaroc.com/xsd" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" targetNamespace="http://ws.royalairmaroc.com">
+    <wsdl:documentation>
+                Please Type your service description here
+        </wsdl:documentation>
+    <wsdl:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://DAO.royalairmaroc.com/xsd">
+            <xs:complexType name="Vol">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="destination" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="flightDate" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="flightNumber" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="origine" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="realArrival" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="realDeparter" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schedueldArrival" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schedueldDeparter" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="statut" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="timezoneDestination" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="timezoneOrigine" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax22="http://DAO.royalairmaroc.com/xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ws.royalairmaroc.com">
+            <xs:import namespace="http://DAO.royalairmaroc.com/xsd"/>
+            <xs:element name="WebsitegetFlightInfoByOD">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="Origine" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="destination" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="WebsitegetFlightInfoByODResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ax22:Vol"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="WebsitegetFlightInfoByFlightNumber">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="FnNumber" type="xs:short"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="WebsitegetFlightInfoByFlightNumberResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ax22:Vol"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SmsgetFlightInfoByFlightNumber">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="FlightNumber" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SmsgetFlightInfoByFlightNumberResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ax22:Vol"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Legbyflightnumber">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="FlightNumber" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="datejour" nillable="true" type="xs:date"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="LegbyflightnumberResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="return" nillable="true" type="ax22:Vol"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="WebsitegetFlightInfoByODRequest">
+        <wsdl:part name="parameters" element="ns:WebsitegetFlightInfoByOD"/>
+    </wsdl:message>
+    <wsdl:message name="WebsitegetFlightInfoByODResponse">
+        <wsdl:part name="parameters" element="ns:WebsitegetFlightInfoByODResponse"/>
+    </wsdl:message>
+    <wsdl:message name="LegbyflightnumberRequest">
+        <wsdl:part name="parameters" element="ns:Legbyflightnumber"/>
+    </wsdl:message>
+    <wsdl:message name="LegbyflightnumberResponse">
+        <wsdl:part name="parameters" element="ns:LegbyflightnumberResponse"/>
+    </wsdl:message>
+    <wsdl:message name="SmsgetFlightInfoByFlightNumberRequest">
+        <wsdl:part name="parameters" element="ns:SmsgetFlightInfoByFlightNumber"/>
+    </wsdl:message>
+    <wsdl:message name="SmsgetFlightInfoByFlightNumberResponse">
+        <wsdl:part name="parameters" element="ns:SmsgetFlightInfoByFlightNumberResponse"/>
+    </wsdl:message>
+    <wsdl:message name="WebsitegetFlightInfoByFlightNumberRequest">
+        <wsdl:part name="parameters" element="ns:WebsitegetFlightInfoByFlightNumber"/>
+    </wsdl:message>
+    <wsdl:message name="WebsitegetFlightInfoByFlightNumberResponse">
+        <wsdl:part name="parameters" element="ns:WebsitegetFlightInfoByFlightNumberResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="FlightStatusPortType">
+        <wsdl:operation name="WebsitegetFlightInfoByOD">
+            <wsdl:input message="ns:WebsitegetFlightInfoByODRequest" wsaw:Action="urn:WebsitegetFlightInfoByOD"/>
+            <wsdl:output message="ns:WebsitegetFlightInfoByODResponse" wsaw:Action="urn:WebsitegetFlightInfoByODResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="Legbyflightnumber">
+            <wsdl:input message="ns:LegbyflightnumberRequest" wsaw:Action="urn:Legbyflightnumber"/>
+            <wsdl:output message="ns:LegbyflightnumberResponse" wsaw:Action="urn:LegbyflightnumberResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="SmsgetFlightInfoByFlightNumber">
+            <wsdl:input message="ns:SmsgetFlightInfoByFlightNumberRequest" wsaw:Action="urn:SmsgetFlightInfoByFlightNumber"/>
+            <wsdl:output message="ns:SmsgetFlightInfoByFlightNumberResponse" wsaw:Action="urn:SmsgetFlightInfoByFlightNumberResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="WebsitegetFlightInfoByFlightNumber">
+            <wsdl:input message="ns:WebsitegetFlightInfoByFlightNumberRequest" wsaw:Action="urn:WebsitegetFlightInfoByFlightNumber"/>
+            <wsdl:output message="ns:WebsitegetFlightInfoByFlightNumberResponse" wsaw:Action="urn:WebsitegetFlightInfoByFlightNumberResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="FlightStatusSoap11Binding" type="ns:FlightStatusPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="WebsitegetFlightInfoByOD">
+            <soap:operation soapAction="urn:WebsitegetFlightInfoByOD" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Legbyflightnumber">
+            <soap:operation soapAction="urn:Legbyflightnumber" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SmsgetFlightInfoByFlightNumber">
+            <soap:operation soapAction="urn:SmsgetFlightInfoByFlightNumber" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="WebsitegetFlightInfoByFlightNumber">
+            <soap:operation soapAction="urn:WebsitegetFlightInfoByFlightNumber" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="FlightStatusSoap12Binding" type="ns:FlightStatusPortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="WebsitegetFlightInfoByOD">
+            <soap12:operation soapAction="urn:WebsitegetFlightInfoByOD" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Legbyflightnumber">
+            <soap12:operation soapAction="urn:Legbyflightnumber" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SmsgetFlightInfoByFlightNumber">
+            <soap12:operation soapAction="urn:SmsgetFlightInfoByFlightNumber" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="WebsitegetFlightInfoByFlightNumber">
+            <soap12:operation soapAction="urn:WebsitegetFlightInfoByFlightNumber" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="FlightStatusHttpBinding" type="ns:FlightStatusPortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="WebsitegetFlightInfoByOD">
+            <http:operation location="WebsitegetFlightInfoByOD"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="Legbyflightnumber">
+            <http:operation location="Legbyflightnumber"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="SmsgetFlightInfoByFlightNumber">
+            <http:operation location="SmsgetFlightInfoByFlightNumber"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="WebsitegetFlightInfoByFlightNumber">
+            <http:operation location="WebsitegetFlightInfoByFlightNumber"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="FlightStatus">
+        <wsdl:port name="FlightStatusHttpSoap11Endpoint" binding="ns:FlightStatusSoap11Binding">
+            <soap:address location="http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus.FlightStatusHttpSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="FlightStatusHttpsSoap11Endpoint" binding="ns:FlightStatusSoap11Binding">
+            <soap:address location="https://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus.FlightStatusHttpsSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="FlightStatusHttpSoap12Endpoint" binding="ns:FlightStatusSoap12Binding">
+            <soap12:address location="http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus.FlightStatusHttpSoap12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="FlightStatusHttpsSoap12Endpoint" binding="ns:FlightStatusSoap12Binding">
+            <soap12:address location="https://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus.FlightStatusHttpsSoap12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="FlightStatusHttpsEndpoint" binding="ns:FlightStatusHttpBinding">
+            <http:address location="https://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus.FlightStatusHttpsEndpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="FlightStatusHttpEndpoint" binding="ns:FlightStatusHttpBinding">
+            <http:address location="http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus.FlightStatusHttpEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
