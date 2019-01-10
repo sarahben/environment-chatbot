@@ -264,7 +264,7 @@ const sendTextMessage = async (recipientId, text) => {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
    switch (action) {
     case "input.unknown":
-        var responseText = responseText + "<br>" + "Comment pourrions-nous vous aider?"
+        var responseText = responseText + " Comment pourrions-nous vous aider?"
         // sendTextMessage(sender.id, responseText);
         var replies = [{
           "content_type": "text",
@@ -287,8 +287,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         var imgUrl = "https://cdn1.imggmi.com/uploads/2019/1/7/87f7342840d56d0e67c2a0f01a250c7c-full.jpg";
         sendImageMessage(sender.id, imgUrl);
         break;
-      case "welcome-intent":
-        // var responseText = "Que cherchez-vous?"
+      case "welcome-intent-fr":
         var replies = [{
           "content_type": "text",
           "title": "Checking",
@@ -306,6 +305,24 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       }];
         sendQuickReply(sender.id, responseText, replies)
         break;
+        case "welcome-intent-en":
+          var replies = [{
+            "content_type": "text",
+            "title": "Checking",
+            "payload": "Checking",
+        },
+        {
+            "content_type": "text",
+            "title": "Track bagage",
+            "payload": "Track bagage",
+        },
+        {
+            "content_type": "text",
+            "title": "Flight status",
+            "payload": "Flight status",
+        }];
+          sendQuickReply(sender.id, responseText, replies)
+          break;
     // Call webservice RAM flight status
     case "Flight_status":
       sendTextMessage(sender.id, responseText);
