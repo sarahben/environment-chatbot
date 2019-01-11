@@ -8,9 +8,8 @@ var opts = {
     };
   soap.createClient(url, opts, function(err, client) {
       console.log('connected');
-      client.FlightStatus.FlightStatusHttpSoap11Endpoint.SmsgetFlightInfoByFlightNumber(args, function(err, result, body) {
+      client.FlightStatus.SmsgetFlightInfoByFlightNumber(args, function(err, result, body) {
           console.log(result);
-          console.log("create data : ", body);
           // if(result != null){
           // let jsreturn = result.return;
           // console.log(jsreturn);
@@ -19,3 +18,5 @@ var opts = {
           // console.log(statut);}
       });
   });
+
+//FlightStatusHttpSoap11Endpoint.

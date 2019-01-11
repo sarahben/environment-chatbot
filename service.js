@@ -14,6 +14,8 @@ const options = {
     path: target.href,
     method : 'POST',
     headers : {
+        'User-Agent' : 'sampleTest',
+        'Content-Type' : 'text/xml;charset=utf-8',
         "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
         "Host" : target.hostname,
         'soapAction' : 'urn:SmsgetFlightInfoByFlightNumber'
