@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.royalairmaroc.com">
+  <soapenv:Header/>
+  <soapenv:Body>
+     <ws:SmsgetFlightInfoByFlightNumber>
+        <!--Optional:-->
+        <ws:FlightNumber>AT425</ws:FlightNumber>
+     </ws:SmsgetFlightInfoByFlightNumber>
+  </soapenv:Body>
+</soapenv:Envelope>
