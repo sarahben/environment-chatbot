@@ -1,3 +1,23 @@
+var request = require('request');
+
+var options = {
+    proxy: process.env.QUOTAGUARDSTATIC_URL,
+    url: 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl',
+    headers: {
+        'User-Agent': 'node.js'
+    }
+};
+
+function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(body);
+    } else {
+      console.log(error);
+    }
+}
+
+request(options, callback);
+
 var soap = require('soap');
 var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
 var args = {FlightNumber: 'AT424'};
