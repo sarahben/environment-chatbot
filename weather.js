@@ -1,9 +1,11 @@
+// access an HTTP API
 var http, options, proxy, url;
 
 http = require("http");
-
 url = require("url");
-let quota = "http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293";
+
+let quota = process.env.QUOTAGUARDSTATIC_URL";
+
 proxy = url.parse(quota);
 target  = url.parse("http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl");
 
@@ -18,18 +20,18 @@ options = {
 };
 
 http.get(options, function(res) {
-  // res.pipe(process.stdout);
-  console.log("status code", res);
-  console.log(res); });
+  res.pipe(process.stdout);
+  return console.log("status code", res.statusCode);
+  });
+//access an HTTP API
 
-http.post(options, function(res)  {
+http.(options, function(res)  {
   var soap = require('soap');
   // var wsdlurl = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
   var args = {FlightNumber: 'AT424'};
   var opts = {
         wsdl_options: {
             proxy: process.env.QUOTAGUARDSTATIC_URL
-            //http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293
             }
           }
     soap.createClient(options.path, opts, function(err, client) {
@@ -37,7 +39,7 @@ http.post(options, function(res)  {
             console.log(result);
             if(result != null){
               let jsreturn = result.return;
-              console.log(jsreturn);
+              console.log(jsreturn);}
             //
             // let statut = jsreturn[0].statut;
             // console.log(statut);}
