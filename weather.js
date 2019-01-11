@@ -52,7 +52,7 @@ soap.createClient(options.path, opts, function(err, client) {
         console.log(result);
         console.log("create data : ", body);
         if (err) {
-          return reject(err)
+          console.log(err);
         }
         // if(result != null){
         // let jsreturn = result.return;
