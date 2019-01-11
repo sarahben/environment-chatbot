@@ -1,7 +1,7 @@
 var soap = require('soap');
 var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
 var args = {FlightNumber: 'AT424'};
-opts = {
+var opts = {
         wsdl_options: {
             proxy: process.env.QUOTAGUARDSTATIC_URL
         }
