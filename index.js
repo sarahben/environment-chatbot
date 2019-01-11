@@ -376,7 +376,6 @@ function sendFlightnumber(recipientId, responseText, parameters) {
   var http, options, proxy, url, target;
 
   http = require("http");
-
   url = require("url");
   let quota = "http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293";
   proxy = url.parse(quota);
@@ -392,13 +391,18 @@ function sendFlightnumber(recipientId, responseText, parameters) {
     }
   };
 
-  http.get(options, function(res) {
-    res.pipe(process.stdout);
+  // http.get(options, function(res) {
+  //   res.pipe(process.stdout);
     // return console.log("status code", res);
     var soap = require('soap');
     var wsdlurl = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
     var args = {FlightNumber: 'AT424'};
-      soap.createClient(wsdlurl, function(err, client) {
+    var opts = {
+            wsdl_options: {
+                proxy: process.env.QUOTAGUARDSTATIC_URL
+            }
+        };
+      soap.createClient(wsdlurl, opts, function(err, client) {
           client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args, function(err, result) {
               console.log(result);
               resultSoap = result;
@@ -411,7 +415,7 @@ function sendFlightnumber(recipientId, responseText, parameters) {
           });
       });
 
-  });
+  // });
   sendTextMessage(recipientId, resultSoap);
   // var soap = require('soap');
   // var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
