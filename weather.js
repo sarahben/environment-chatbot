@@ -1,4 +1,4 @@
-// const request = require('request');
+const request = require('request');
 //
 // const xml = './Enveloppe.xml';
 // const opts = {
@@ -78,16 +78,7 @@
 //      </ws:SmsgetFlightInfoByFlightNumber>
 //   </soapenv:Body>
 // </soapenv:Envelope>;
-const request = require('request');
-var http = require("http");
-var url = require("url");
-var soap = require('soap');
-var args = {FlightNumber: 'AT424'};
-//
-var quota = "http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293";
-//
-var proxy = url.parse(quota);
-var target  = url.parse("http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl");
+const parser = require('body-parser');
 var requestBody =
   '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
   'xmlns:ws="http://ws.royalairmaroc.com"> <soapenv:Header/>' +
@@ -99,51 +90,54 @@ var requestBody =
 
 var requestHeaders = {
   'cache-control': 'no-cache',
-  'soapaction': 'addRoom',
+  'soapaction': 'urn:SmsgetFlightInfoByFlightNumber',
   'content-type': 'text/xml;charset=UTF-8'
 };
-var options = {
-  hostname: proxy.hostname,
-  port: proxy.port || 80,
-  path: target.href,
-  headers: {
-    "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
-    "Host" : target.hostname
-  }
-};
-var requestOptions = {
-  'method': 'POST',
-  // 'url': vidyoApiEndpoint,
-  'qs': { 'wsdl': ''},
-  'headers': requestHeaders,
-  'body': requestBody,
-  'timeout': 5000,
-  'hostname' : proxy.hostname,
-  'port' : proxy.port || 80,
-  'path' : target.href,
-};
 
-request(requestOptions, function (error, response, body) {
+// var requestOptions = {
+//   'method': 'POST',
+//   'url': 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl',
+//   'qs': { 'wsdl': ''},
+//   'headers': requestHeaders,
+//   'body': requestBody,
+//   'timeout': 5000
+// };
+const options = {
+    hostname: proxy.hostname,
+    port: proxy.port || 80,
+    path: target.href,
+    method : 'POST',
+    headers : {
+        'User-Agent' : 'sampleTest',
+        'Content-Type' : 'text/xml;charset=utf-8',
+        "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
+        "Host" : target.hostname,
+        'soapAction' : 'urn:SmsgetFlightInfoByFlightNumber'
+    },
+    body: requestBody,
+    timeout: 5000,
+}
+
+request(options, function (error, response, body) {
   if (error) {
-    // handle error
+    console.log(error);
   } else {
-    try {
-      var parsingOptions = {
-        'object': true,
-        'sanitize': false
-      };
-      var jsonResult = parser.toJson(body, parsingOptions); // from xml
-      if(jsonResult['soapenv:Envelope']
-        ['soapenv:Body']
-        ['ns1:AddRoomResponse']
-        ['ns1:OK'] === 'OK') {
-          conferenceInfo(req, res, next, params);
-      } else {
-       // handle error
-      }
-    } catch (e) {
-      // handle error
-    }
+    console.log(body);
+    //   var parsingOptions = {
+    //     'object': true,
+    //     'sanitize': false
+    //   };
+    //   var jsonResult = parser.toJson(body, parsingOptions); // from xml
+    //   if(jsonResult['soapenv:Envelope']
+    //     ['soapenv:Body']
+    //     ['ns1:AddRoomResponse']
+    //     ['ns1:OK'] === 'OK') {
+    //       conferenceInfo(req, res, next, params);
+    //       console.log(jsonResult);
+    //   } else {
+    //      console.log(error);// handle error
+    //   // handle error
+    // }
    }
 });//.auth(vidyoApiUsername, vidyoApiPassword);
 // you can remove this .auth if your api has no authentication
