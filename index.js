@@ -371,7 +371,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
             console.log(result);
             res_bag = result;
           });
-      }).end();
+      });//.end();
       console.log(res_bag, "sara+++h");
       sendTextMessage(sender.id, res_bag);
       break;
