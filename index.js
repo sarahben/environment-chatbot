@@ -390,20 +390,27 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
          }
       });
       console.log(sender.id, responseText);
-      //Send responses
-      send(sender.id, responseText);
-
-      const send = async (recipientId, responseText) => {
-      var messageData = {
-        recipient: {
-          id: recipientId
-        },
-        message: {
-          text: responseText
-        }
-      };
-      await callSendAPI(messageData);
- }
+      function callback(error, response, body) {
+          if (!error && response.statusCode == 200) {
+              console.log(body);
+          }
+      }
+      request(requestOptions, callback);
+      sendTextMessage(sender.id, responseText);
+ //      //Send responses
+ //      send(sender.id, responseText);
+ //
+ //      const send = async (recipientId, responseText) => {
+ //      var messageData = {
+ //        recipient: {
+ //          id: recipientId
+ //        },
+ //        message: {
+ //          text: responseText
+ //        }
+ //      };
+ //      await callSendAPI(messageData);
+ // }
 
       break;
     default:

@@ -48,7 +48,13 @@ request(requestOptions, function (error, response, body) {
   var z = y.nodeValue;
   console.log(String(z) + "coucou");
 } //else
+function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(body);
+    }
+}
 
+request(requestOptions, callback);
     //json is converted xml
 });
 
