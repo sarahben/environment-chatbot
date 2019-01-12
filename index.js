@@ -357,6 +357,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
         path : path_bag,
         method : 'GET'
       };
+      console.log(options);
 
       http.request(options, function(res){
           var body = '';
@@ -366,10 +367,12 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
               });
           res.on('end', function () {
             var result = JSON.parse(body);
+            console.log(body);
             console.log(result);
-            res_bag = result.statut;
+            res_bag = result;
           });
       }).end();
+      console.log(res_bag, "sara+++h");
       sendTextMessage(sender.id, res_bag);
       break;
     // Call webservice RAM flight status
