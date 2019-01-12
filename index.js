@@ -416,6 +416,7 @@ function sendFlightnumber(recipientId, responseText, parameters){
   request(requestOptions, function (error, response, body) {
     if (error) {
       console.log(error);
+      func_body = "error";
     } else {
       //Afficher resultat
       // console.log(body);
