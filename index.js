@@ -415,6 +415,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
             console.log(variable_texte, "sara");
          }
       });
+      // ----- WAIT -------
+      wait((5000));
       console.log(sender.id, variable_texte);
       function callback(error, response, body) {
           if (!error && response.statusCode == 200) {
