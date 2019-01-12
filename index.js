@@ -339,43 +339,38 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       break;
     case "tag-lug":
     // Variables de path
-      // var res = responseText.split(" ");
-      // var tag = res[0];
-      // var date_bag = res[1];
-      // var name_bag = res[2];
+      var res = text.split(" ");
+      var tag = res[0];
+      var date_bag = res[1];
+      var name_bag = res[2];
       console.log(text);
-      var tag = "AT" + parameters.number;
-      var date_bag = parameters.date;
-      var name_bag = parameters.givenName;
       console.log(tag, date_bag, name_bag, "Karim");
-      console.log(responseText);
-      console.log(parameters);
-      // //Chemin de rest
-      // var path_bag = '/site/bag-status?tag=' + tag + '&flightdate=' + date_bag + '&name=' + name_bag;
-      // console.log(path_bag, "Baydara");
-      // // web service REST
-      // var http = require('http');
-      //
-      // var options = {
-      //   host: 'trackbag.royalairmaroc.com',
-      //   port: 80,
-      //   path : path_bag,
-      //   method : 'GET'
-      // };
-      //
-      // http.request(options, function(res){
-      //     var body = '';
-      //
-      //     res.on('data', function (chunk) {
-      //       body += chunk;
-      //         });
-      //     res.on('end', function () {
-      //       var result = JSON.parse(body);
-      //       console.log(result);
-      //       res_bag = result.statut;
-      //     });
-      // }).end();
-      // sendTextMessage(sender.id, res_bag);
+      //Chemin de rest
+      var path_bag = '/site/bag-status?tag=' + tag + '&flightdate=' + date_bag + '&name=' + name_bag;
+      console.log(path_bag, "Baydara");
+      // web service REST
+      var http = require('http');
+
+      var options = {
+        host: 'trackbag.royalairmaroc.com',
+        port: 80,
+        path : path_bag,
+        method : 'GET'
+      };
+
+      http.request(options, function(res){
+          var body = '';
+
+          res.on('data', function (chunk) {
+            body += chunk;
+              });
+          res.on('end', function () {
+            var result = JSON.parse(body);
+            console.log(result);
+            res_bag = result.statut;
+          });
+      }).end();
+      sendTextMessage(sender.id, res_bag);
       break;
     // Call webservice RAM flight status
     case "Flight_status":
