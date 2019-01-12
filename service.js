@@ -11,16 +11,33 @@ var target  = url.parse("http://statutvolp.royalairmaroc.com/WebServiceStatutDeV
 const options = {
     hostname: proxy.hostname,
     port: proxy.port || 80,
-    path: target.href,
-    method : 'POST',
-    headers : {
-        'User-Agent' : 'sampleTest',
-        'Content-Type' : 'text/xml;charset=utf-8',
-        "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
-        "Host" : target.hostname,
-        'soapAction' : 'urn:SmsgetFlightInfoByFlightNumber'
-    }
-}
+    url: 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl',
+    qs: { 'wsdl': ''},
+    method: 'POST',
+    proxy: quota,
+    headers: {
+      'User-Agent' : 'sampleTest',
+      'Content-Type' : 'text/xml;charset=utf-8',
+      "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
+      "Host" : target.hostname,
+      'soapAction' : 'urn:SmsgetFlightInfoByFlightNumber'
+    },
+  }
+    body: body,
+    timeout: 5000
+// const options = {
+//     hostname: proxy.hostname,
+//     port: proxy.port || 80,
+//     path: target.href,
+//     method : 'POST',
+//     headers : {
+//         'User-Agent' : 'sampleTest',
+//         'Content-Type' : 'text/xml;charset=utf-8',
+//         "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
+//         "Host" : target.hostname,
+//         'soapAction' : 'urn:SmsgetFlightInfoByFlightNumber'
+//     }
+// }
 var obj = https.request(options,(resp)=>{
     let data = ''
     fs.writeFile('server.log',resp.statusCode+"\n"+JSON.stringify(resp.headers),(err)=>{

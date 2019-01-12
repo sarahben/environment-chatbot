@@ -79,14 +79,6 @@ const request = require('request');
 //   </soapenv:Body>
 // </soapenv:Envelope>;
 const parser = require('body-parser');
-const url = require('url')
-
-// const xml = fs.readFileSync('./Enveloppe.xml','utf-8')
-var quota = "http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293";
-
-var proxy = url.parse(quota);
-var target  = url.parse("http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl");
-
 var requestBody =
   '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
   'xmlns:ws="http://ws.royalairmaroc.com"> <soapenv:Header/>' +
@@ -102,31 +94,17 @@ var requestHeaders = {
   'content-type': 'text/xml;charset=UTF-8'
 };
 
-// var requestOptions = {
-//   'method': 'POST',
-//   'url': 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl',
-//   'qs': { 'wsdl': ''},
-//   'headers': requestHeaders,
-//   'body': requestBody,
-//   'timeout': 5000
-// };
-const options = {
-    hostname: proxy.hostname,
-    port: proxy.port || 80,
-    path: target.href,
-    method : 'POST',
-    headers : {
-        'User-Agent' : 'sampleTest',
-        'Content-Type' : 'text/xml;charset=utf-8',
-        "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
-        "Host" : target.hostname,
-        'soapAction' : 'urn:SmsgetFlightInfoByFlightNumber'
-    },
-    body: requestBody,
-    timeout: 5000,
-}
+var requestOptions = {
+  'method': 'POST',
+  'url': 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl',
+  'qs': { 'wsdl': ''},
+  'proxy': 'http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293',
+  'headers': requestHeaders,
+  'body': requestBody,
+  'timeout': 5000
+};
 
-request(options, function (error, response, body) {
+request(requestOptions, function (error, response, body) {
   if (error) {
     console.log(error);
   } else {
