@@ -79,6 +79,7 @@ const request = require('request');
 //   </soapenv:Body>
 // </soapenv:Envelope>;
 const parser = require('body-parser');
+var body_xml;
 var requestBody =
   '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
   'xmlns:ws="http://ws.royalairmaroc.com"> <soapenv:Header/>' +
@@ -108,22 +109,37 @@ request(requestOptions, function (error, response, body) {
   if (error) {
     console.log(error);
   } else {
-    console.log(body);
-    //   var parsingOptions = {
-    //     'object': true,
-    //     'sanitize': false
-    //   };
-    //   var jsonResult = parser.toJson(body, parsingOptions); // from xml
-    //   if(jsonResult['soapenv:Envelope']
-    //     ['soapenv:Body']
-    //     ['ns1:AddRoomResponse']
-    //     ['ns1:OK'] === 'OK') {
-    //       conferenceInfo(req, res, next, params);
-    //       console.log(jsonResult);
-    //   } else {
-    //      console.log(error);// handle error
-    //   // handle error
-    // }
-   }
-});//.auth(vidyoApiUsername, vidyoApiPassword);
-// you can remove this .auth if your api has no authentication
+//Afficher resultat
+// console.log(body);
+  var DOMParser = new (require('xmldom')).DOMParser;
+  var doc = DOMParser.parseFromString(body);
+  var NodeById = doc.getElementsByTagName('ax21:flightDate')[0];
+  // console.log(NodeById);
+  // for(i = 0; i < NodeById.length; i++){
+  //   var node = NodeById.item(i);
+  //   console.log(node);
+  //     if(node.getNodeName() = 'Element'){
+  //       console.log(node.getNodeValue());
+  //     }
+  // }
+  var y = NodeById.childNodes[0];
+  console.log(y.nodeValue);
+} //else
+
+    //json is converted xml
+});
+
+// var xml2js = require('xml2js');
+//
+// var parser = new xml2js.Parser();
+// //     var xml = '\
+// // <yyy:response xmlns:xxx="http://domain.com">\
+// //     <yyy:success>\
+// //         <yyy:data>some-value</yyy:data>\
+// //     </yyy:success>\
+// // </yyy:response>';ns:SmsgetFlightInfoByFlightNumberResponse ['ns:SmsgetFlightInfoByFlightNumberResponse']
+// parser.parseString(body, function (err, result) {
+// console.dir(result['soapenv:Envelope']['soapenv:Body']);
+// var niv = result['soapenv:Envelope']['soapenv:Body'];
+// console.log(niv);
+// });
