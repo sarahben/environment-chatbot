@@ -371,8 +371,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
             console.log(result);
             res_bag = result;
           });
-      });//.end();
-      console.log(res_bag, "sara+++h");
+          console.log(res_bag, "IN***");
+      })//.end();
+      
+      console.log(res_bag, "OUT***");
       sendTextMessage(sender.id, res_bag);
       break;
     // Call webservice RAM flight status
