@@ -174,7 +174,7 @@ function sendToApiAi(sender, text) {
 
   apiaiRequest.on("response", response => {
     if (isDefined(response.result)) { //Constant isDefined is defined next
-      handleApiAiResponse(sender, response);
+      handleApiAiResponse(sender, response, text);
     }
   });
 
@@ -209,7 +209,7 @@ const sendTypingOn = (recipientID) => {
 }
 
 //Send that data to the handleApiAiResponse()
-function handleApiAiResponse(sender, response) {
+function handleApiAiResponse(sender, response, text) {
   let responseText = response.result.fulfillment.speech;
   let responseData = response.result.fulfillment.data;
   let messages = response.result.fulfillment.messages;
@@ -226,7 +226,7 @@ function handleApiAiResponse(sender, response) {
       sender.id,
       "I'm not sure what you want. Can you be more specific?" );
   } else if (isDefined(action)) {
-    handleApiAiAction(sender, action, responseText, contexts, parameters); // A définir
+    handleApiAiAction(sender, action, responseText, contexts, parameters, text); // A définir
   } else if (isDefined(responseData) && isDefined(responseData.facebook)) {
     try {
       console.log("Response as formatted message" + responseData.facebook);
@@ -267,7 +267,7 @@ const sendTextMessage = async (recipientId, text) => {
   await callSendAPI(messageData);
 }
 //If we get Action from dialogflow response, we are calling the handleApiAiAction().
-function handleApiAiAction(sender, action, responseText, contexts, parameters) {
+function handleApiAiAction(sender, action, responseText, contexts, parameters, text) {
    switch (action) {
     case "input.unknown":
         var responseText = responseText + " Comment pourrions-nous vous aider?"
@@ -343,6 +343,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       // var tag = res[0];
       // var date_bag = res[1];
       // var name_bag = res[2];
+      console.log(text);
       var tag = "AT" + parameters.number;
       var date_bag = parameters.date;
       var name_bag = parameters.givenName;
