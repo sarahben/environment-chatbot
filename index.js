@@ -21,6 +21,7 @@ const
   let tag_bag;
   let flight_date;
   let name;
+  let variable_texte;
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
@@ -386,18 +387,19 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
             var var_1 = NodeById.childNodes[0];
             var var_2 = var_1.nodeValue;
             // console.log
-            responseText = String(var_2);
-            console.log(responseText);
+            variable_texte = String(var_2);
+            console.log(variable_texte, "sara");
          }
       });
-      console.log(sender.id, responseText);
+      console.log(sender.id, variable_texte);
       function callback(error, response, body) {
           if (!error && response.statusCode == 200) {
               console.log(body);
           }
       }
       request(requestOptions, callback);
-      sendTextMessage(sender.id, responseText);
+      console.log(variable_texte, "out");
+      sendTextMessage(sender.id, variable_texte);
  //      //Send responses
  //      send(sender.id, responseText);
  //
