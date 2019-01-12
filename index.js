@@ -307,6 +307,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
           "title": "Staut de vol",
           "payload": "Statut de vol",
       }];
+      responseText = "coucou " + replies;
         sendQuickReply(sender.id, responseText, replies)
         break;
         case "welcome-intent-en":
@@ -337,6 +338,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     case "tag-bag" || "tag-lug":
       tag_bag = parameters.tag_bag.replace(/\s+/g, '');
       sendTextMessage(sender.id, responseText);
+      break;
     // Call webservice RAM flight status
     case "Flight_status":
       sendTextMessage(sender.id, responseText);
