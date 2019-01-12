@@ -370,10 +370,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
             console.log(body);
             console.log(result);
             res_bag = result;
-          });
+          })
           console.log(res_bag, "IN***");
       })//.end();
-      
+
       console.log(res_bag, "OUT***");
       sendTextMessage(sender.id, res_bag);
       break;
