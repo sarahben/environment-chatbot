@@ -367,10 +367,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
               });
           res.on('end', function () {
             var result = JSON.parse(body);
-            console.log(body);
-            console.log(result);
+            console.log(body, "test");
+            console.log(result, "----------");
+            sendTextMessage(sender.id, result.statut);
             res_bag = result;
-          })
+          });
           console.log(res_bag, "IN***");
       })//.end();
 
