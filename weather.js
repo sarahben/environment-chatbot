@@ -113,7 +113,7 @@ request(requestOptions, function (error, response, body) {
 // console.log(body);
   var DOMParser = new (require('xmldom')).DOMParser;
   var doc = DOMParser.parseFromString(body);
-  var NodeById = doc.getElementsByTagName('ax21:flightDate')[0];
+  var NodeById = doc.getElementsByTagName('ax21:statut')[0];
   // console.log(NodeById);
   // for(i = 0; i < NodeById.length; i++){
   //   var node = NodeById.item(i);

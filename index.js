@@ -411,7 +411,6 @@ function sendFlightnumber(recipientId, responseText, parameters){
     'body': requestBody,
     'timeout': 5000
   };
-  var z;
   request(requestOptions, function (error, response, body) {
     if (error) {
       console.log(error);
@@ -420,11 +419,11 @@ function sendFlightnumber(recipientId, responseText, parameters){
       var doc = DOMParser.parseFromString(body);
       var NodeById = doc.getElementsByTagName('ax21:statut')[0];
       var y = NodeById.childNodes[0];
-      z = y.nodeValue;
-      // console.log(y.nodeValue);
+      func_body = y.nodeValue;
+      console.log(func_body);
      }
   });
-  sendTextMessage(recipientId, z);
+  sendTextMessage(recipientId, func_body);
 };
 // Send API de FACEBOOK
 // L'API reçoit un input JSON qu'elle envoie à messenger
