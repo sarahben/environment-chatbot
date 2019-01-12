@@ -347,13 +347,12 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         break;
     case "Flight-number":
       // sendFlightnumber(sender.id, responseText, parameters);
-      let func_body;
-      let flight_number = parameters.flight.replace(/\s+/g, '');
+      var body_xml = parameters.flight.replace(/\s+/g, '');
       var requestBody =
         '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
         'xmlns:ws="http://ws.royalairmaroc.com"> <soapenv:Header/>' +
         '<soapenv:Body> <ws:SmsgetFlightInfoByFlightNumber>' +
-        '<ws:FlightNumber>' + flight_number +'</ws:FlightNumber>' +
+        '<ws:FlightNumber>' + body_xml + '</ws:FlightNumber>' +
         '</ws:SmsgetFlightInfoByFlightNumber>' +
         '</soapenv:Body>' +
         '</soapenv:Envelope>';
@@ -373,22 +372,24 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         'body': requestBody,
         'timeout': 5000
       };
+
       request(requestOptions, function (error, response, body) {
         if (error) {
           console.log(error);
-          func_body = "error";
         } else {
-          //Afficher resultat
-          // console.log(body);
-            var DOMParser = new (require('xmldom')).DOMParser;
-            var doc = DOMParser.parseFromString(body);
-            var NodeById = doc.getElementsByTagName('ax21:statut')[0];
+      //Afficher resultat
+      // console.log(body);
+        var DOMParser = new (require('xmldom')).DOMParser;
+        var doc = DOMParser.parseFromString(body);
+        var NodeById = doc.getElementsByTagName('ax21:statut')[0];
             var var_1 = NodeById.childNodes[0];
             var var_2 = var_1.nodeValue;
-            // console.log(z);
+            // console.log
             responseText = String(var_2);
+            console.log(responseText);
          }
       });
+      console.log(responseText);
       sendTextMessage(sender.id, responseText);
       break;
     default:
