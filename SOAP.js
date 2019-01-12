@@ -29,10 +29,10 @@ var opts = {
   soap.createClient(url, opts, function(err, client) {
       console.log('connected');
       client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args, function(err, result) {
-        if (!error){
-            console.log(err); 
+        if (!err){
+            console.log(result);
         } else {
-          console.log(result); }
+          console.log(err); }
           // if(result != null){
           // let jsreturn = result.return;
           // console.log(jsreturn);

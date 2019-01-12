@@ -18,6 +18,9 @@ const
 // Define global variable for message type
   let message_type;
   let resultSoap;
+  let tag_bag;
+  let flight_date;
+  let name;
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
@@ -287,6 +290,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         var imgUrl = "https://cdn1.imggmi.com/uploads/2019/1/7/87f7342840d56d0e67c2a0f01a250c7c-full.jpg";
         sendImageMessage(sender.id, imgUrl);
         break;
+        //welcome intent in both languages
       case "welcome-intent-fr":
         var replies = [{
           "content_type": "text",
@@ -295,13 +299,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       },
       {
           "content_type": "text",
-          "title": "Track bagage",
-          "payload": "Track bagage",
+          "title": "Suivi bagage",
+          "payload": "Suivi bagage",
       },
       {
           "content_type": "text",
-          "title": "Flight status",
-          "payload": "Flight status",
+          "title": "Staut de vol",
+          "payload": "Statut de vol",
       }];
         sendQuickReply(sender.id, responseText, replies)
         break;
@@ -313,8 +317,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         },
         {
             "content_type": "text",
-            "title": "Track bagage",
-            "payload": "Track bagage",
+            "title": "Track luggage",
+            "payload": "Track luggage",
         },
         {
             "content_type": "text",
@@ -323,10 +327,23 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         }];
           sendQuickReply(sender.id, responseText, replies)
           break;
+    // Call webservice RAM track bagage
+    case "Track_luggage":
+      sendTextMessage(sender.id, responseText);
+      break;
+    case "Suivi_bagage":
+      sendTextMessage(sender.id, responseText);
+      break;
+    case "tag-bag" || "tag-lug":
+      tag_bag = parameters.tag_bag.replace(/\s+/g, '');
+      sendTextMessage(sender.id, responseText);
     // Call webservice RAM flight status
     case "Flight_status":
       sendTextMessage(sender.id, responseText);
       break;
+    case "Statut_vol":
+        sendTextMessage(sender.id, responseText);
+        break;
     case "Flight-number":
       sendFlightnumber(sender.id, responseText, parameters);
       break;
@@ -369,10 +386,7 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
 // Fontion dans laquelle est géré le traitement de la récupération du flight number
 function sendFlightnumber(recipientId, responseText, parameters) {
   let flight_number = parameters.flight.replace(/\s+/g, '');
-  // let flight_number = parameters.flight.substring(0, 2) + parameters.flight.substring(2, 6);
-//   sendTextMessage(recipientId, text);
-// }
-  ///////// Code qui consomme le web service !!
+
   var http, options, proxy, url, target;
 
   http = require("http");
@@ -417,28 +431,6 @@ function sendFlightnumber(recipientId, responseText, parameters) {
 
   // });
   sendTextMessage(recipientId, resultSoap);
-  // var soap = require('soap');
-  // var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
-  // var args = {FlightNumber: flight_number};
-  // var opts = {
-  //       wsdl_options: {
-  //           proxy: process.env.QUOTAGUARDSTATIC_URL
-  //           }
-  //         };
-  //   soap.createClient(url, function(err, client) {
-  //       client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args,
-  //          function(err, result) {
-  //             console.log(result);
-  //             console.log(err);
-  //             if(result != null){
-  //               let jsreturn = result.return;
-  //             if(jsreturn != null){
-  //               let statut = jsreturn[0].statut;
-  //           }
-  //         }
-  //       });
-  //   });
-    // sendTextMessage(recipientId, statut);
 }
 // Send API de FACEBOOK
 // L'API reçoit un input JSON qu'elle envoie à messenger
