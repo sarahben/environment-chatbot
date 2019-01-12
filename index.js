@@ -423,7 +423,7 @@ function sendFlightnumber(recipientId, responseText, parameters){
       console.log(func_body);
      }
   });
-  sendTextMessage(recipientId, responseText);
+  sendTextMessage(recipientId,"coucou");
   console.log(requestBody);
 };
 // Send API de FACEBOOK
