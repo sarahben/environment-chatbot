@@ -389,8 +389,22 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
             console.log(responseText);
          }
       });
-      console.log(responseText);
-      sendTextMessage(sender.id, responseText);
+      console.log(sender.id, responseText);
+      //Send responses
+      send(sender.id, responseText);
+
+      const send = async (recipientId, responseText) => {
+      var messageData = {
+        recipient: {
+          id: recipientId
+        },
+        message: {
+          text: responseText
+        }
+      };
+      await callSendAPI(messageData);
+ }
+
       break;
     default:
       //unhandled action, just send back the text
