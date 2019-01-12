@@ -347,7 +347,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         break;
     case "Flight-number":
       sendFlightnumber(sender.id, responseText, parameters);
-      sendTextMessage(sender.id, responseText);
       break;
     default:
       //unhandled action, just send back the text
@@ -430,6 +429,7 @@ function sendFlightnumber(recipientId, responseText, parameters){
      }
   });
   // console.log(requestBody);
+  sendTextMessage(recipientId, responseText);
 }
 // Send API de FACEBOOK
 // L'API reçoit un input JSON qu'elle envoie à messenger
