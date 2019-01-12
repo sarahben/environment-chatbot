@@ -346,7 +346,50 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         sendTextMessage(sender.id, responseText);
         break;
     case "Flight-number":
-      sendFlightnumber(sender.id, responseText, parameters);
+      // sendFlightnumber(sender.id, responseText, parameters);
+      let func_body;
+      let flight_number = parameters.flight.replace(/\s+/g, '');
+      var requestBody =
+        '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
+        'xmlns:ws="http://ws.royalairmaroc.com"> <soapenv:Header/>' +
+        '<soapenv:Body> <ws:SmsgetFlightInfoByFlightNumber>' +
+        '<ws:FlightNumber>' + flight_number +'</ws:FlightNumber>' +
+        '</ws:SmsgetFlightInfoByFlightNumber>' +
+        '</soapenv:Body>' +
+        '</soapenv:Envelope>';
+
+      var requestHeaders = {
+        'cache-control': 'no-cache',
+        'soapaction': 'urn:SmsgetFlightInfoByFlightNumber',
+        'content-type': 'text/xml;charset=UTF-8'
+      };
+
+      var requestOptions = {
+        'method': 'POST',
+        'url': 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl',
+        'qs': { 'wsdl': ''},
+        'proxy': 'http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293',
+        'headers': requestHeaders,
+        'body': requestBody,
+        'timeout': 5000
+      };
+      request(requestOptions, function (error, response, body) {
+        if (error) {
+          console.log(error);
+          func_body = "error";
+        } else {
+          //Afficher resultat
+          // console.log(body);
+            var DOMParser = new (require('xmldom')).DOMParser;
+            var doc = DOMParser.parseFromString(body);
+            var NodeById = doc.getElementsByTagName('ax21:statut')[0];
+            var var_1 = NodeById.childNodes[0];
+            var var_2 = var_1.nodeValue;
+            // console.log(z);
+            responseText = String(var_2);
+         }
+      });
+      sendTextMessage(sender.id, responseText);
       break;
     default:
       //unhandled action, just send back the text
