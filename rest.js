@@ -59,6 +59,6 @@ http.request(options, function(res){
         });
     res.on('end', function () {
       var result = JSON.parse(body);
-      console.log(result);
+      console.log(result.statut);
     });
 }).end();

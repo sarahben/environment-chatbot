@@ -22,6 +22,7 @@ const
   let flight_date;
   let name;
   let variable_texte;
+  let res_bag;
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
@@ -336,9 +337,39 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
     case "Suivi_bagage":
       sendTextMessage(sender.id, responseText);
       break;
-    case "tag-bag" || "tag-lug":
-      tag_bag = parameters.tag_bag.replace(/\s+/g, '');
-      sendTextMessage(sender.id, responseText);
+    case "tag-lug":
+    // Variables de path
+      var res = responseText .split(" ");
+      var tag = res[0];
+      var date_bag = res[1];
+      var name_bag = res[2];
+      console.log(tag, date_bag, name_bag);
+      //Chemin de rest
+      var path_bag = '/site/bag-status?tag=' + tag + '&flightdate=' + date_bag + '&name=' + name_bag;
+      console.log(path_bag);
+      // web service REST
+      var http = require('http');
+
+      var options = {
+        host: 'trackbag.royalairmaroc.com',
+        port: 80,
+        path : path_bag,
+        method : 'GET'
+      };
+
+      http.request(options, function(res){
+          var body = '';
+
+          res.on('data', function (chunk) {
+            body += chunk;
+              });
+          res.on('end', function () {
+            var result = JSON.parse(body);
+            console.log(result);
+            res_bag = result.statut;
+          });
+      }).end();
+      sendTextMessage(sender.id, res_bag);
       break;
     // Call webservice RAM flight status
     case "Flight_status":
@@ -416,7 +447,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
          }
       });
       // ----- WAIT -------
-      wait((5000));
+      // wait((5000)); home
       console.log(sender.id, variable_texte);
       function callback(error, response, body) {
           if (!error && response.statusCode == 200) {
