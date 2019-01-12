@@ -339,14 +339,17 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       break;
     case "tag-lug":
     // Variables de path
-      var res = responseText .split(" ");
-      var tag = res[0];
-      var date_bag = res[1];
-      var name_bag = res[2];
-      console.log(tag, date_bag, name_bag);
+      // var res = responseText.split(" ");
+      // var tag = res[0];
+      // var date_bag = res[1];
+      // var name_bag = res[2];
+      var tag = "AT" + parameters.number;
+      var date_bag = parameters.date;
+      var name_bag = parameters.givenName;
+      console.log(tag, date_bag, name_bag, "Karim");
       //Chemin de rest
       var path_bag = '/site/bag-status?tag=' + tag + '&flightdate=' + date_bag + '&name=' + name_bag;
-      console.log(path_bag);
+      console.log(path_bag, "Baydara");
       // web service REST
       var http = require('http');
 
