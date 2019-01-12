@@ -423,10 +423,10 @@ function sendFlightnumber(recipientId, responseText, parameters){
         var y = NodeById.childNodes[0];
         var z = y.nodeValue;
         // console.log(z);
-        responseText = String(z) + "coucou";
+        func_body = String(z) + "coucou";
      }
   });
-  sendTextMessage(recipientId, responseText);
+  sendTextMessage(recipientId, func_body)
   // console.log(requestBody);
 };
 // Send API de FACEBOOK

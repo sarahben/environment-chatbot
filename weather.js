@@ -124,7 +124,7 @@ request(requestOptions, function (error, response, body) {
   // }
   var y = NodeById.childNodes[0];
   var z = y.nodeValue;
-  console.log(z);
+  console.log(String(z) + "coucou");
 } //else
 
     //json is converted xml
