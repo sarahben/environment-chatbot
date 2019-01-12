@@ -384,7 +384,7 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
   await callSendAPI(messageData);
 }
 // Fontion dans laquelle est géré le traitement de la récupération du flight number
-function sendFlightnumber(recipientId, responseText, parameters) {
+function sendFlightnumber(recipientId, responseText, parameters){
   let flight_number = parameters.flight.replace(/\s+/g, '');
   var requestBody =
     '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
@@ -418,10 +418,8 @@ function sendFlightnumber(recipientId, responseText, parameters) {
       console.log(body);
      }
   });
-
-  });
   sendTextMessage(recipientId, body);
-}
+};
 // Send API de FACEBOOK
 // L'API reçoit un input JSON qu'elle envoie à messenger
 function callSendAPI(messageData) {
