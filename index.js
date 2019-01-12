@@ -405,7 +405,12 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
             var var_5 = NodeBytime.childNodes[0];
             var time_arr = var_5.nodeValue;
 
-            variable_texte = String(statut_vol + num_vol + date_vol + date_destin + time_arr);
+            // variable_texte = String(statut_vol + num_vol + date_vol + date_destin + time_arr);
+            variable_texte = "Statut : " + String(statut_vol) + "\n" +
+                             "Num de vol : " + String(num_vol) + "\n" +
+                             "Date du vol : " + String(date_vol) + "\n" +
+                             "Destination : " + String(date_destin) + "\n" +
+                             "Date et heure d arrivee : " + String(time_arr) + "\n" ;
             // String(var_2);
             console.log(variable_texte, "sara");
          }
