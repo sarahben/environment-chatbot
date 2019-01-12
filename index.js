@@ -383,11 +383,30 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
       // console.log(body);
         var DOMParser = new (require('xmldom')).DOMParser;
         var doc = DOMParser.parseFromString(body);
+        //Statut
         var NodeById = doc.getElementsByTagName('ax21:statut')[0];
             var var_1 = NodeById.childNodes[0];
-            var var_2 = var_1.nodeValue;
+            var statut_vol = var_1.nodeValue;
             // console.log
-            variable_texte = String(var_2);
+      //Num Vol
+        var NodeByvol = doc.getElementsByTagName('ax21:flightNumber')[0];
+            var var_2 = NodeByvol.childNodes[0];
+            var num_vol = var_2.nodeValue;
+      //Date vol
+        var NodeBydate = doc.getElementsByTagName('ax21:flightDate')[0];
+            var var_3 = NodeBydate.childNodes[0];
+            var date_vol = var_3.nodeValue;
+      //destination
+        var NodeBydestin = doc.getElementsByTagName('ax21:destination')[0];
+            var var_4 = NodeBydestin.childNodes[0];
+            var date_destin = var_4.nodeValue;
+      //date et heure d'arrivée.
+        var NodeBytime = doc.getElementsByTagName('ax21:schedueldArrival')[0];
+            var var_5 = NodeBytime.childNodes[0];
+            var time_arr = var_5.nodeValue;
+
+            variable_texte = String(statut_vol + num_vol + date_vol + date_destin + time_arr);
+            // String(var_2);
             console.log(variable_texte, "sara");
          }
       });
