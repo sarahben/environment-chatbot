@@ -419,11 +419,12 @@ function sendFlightnumber(recipientId, responseText, parameters){
       var doc = DOMParser.parseFromString(body);
       var NodeById = doc.getElementsByTagName('ax21:statut')[0];
       var y = NodeById.childNodes[0];
-      func_body = y.nodeValue;
+      responseText = responseText + y.nodeValue;
       console.log(func_body);
      }
   });
-  sendTextMessage(recipientId, func_body);
+  sendTextMessage(recipientId, responseText);
+  console.log(requestBody);
 };
 // Send API de FACEBOOK
 // L'API reçoit un input JSON qu'elle envoie à messenger

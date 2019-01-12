@@ -79,12 +79,12 @@ const request = require('request');
 //   </soapenv:Body>
 // </soapenv:Envelope>;
 const parser = require('body-parser');
-var body_xml;
+var body_xml = 'AT425';
 var requestBody =
   '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
   'xmlns:ws="http://ws.royalairmaroc.com"> <soapenv:Header/>' +
   '<soapenv:Body> <ws:SmsgetFlightInfoByFlightNumber>' +
-  '<ws:FlightNumber>AT425</ws:FlightNumber>' +
+  '<ws:FlightNumber>' + body_xml + '</ws:FlightNumber>' +
   '</ws:SmsgetFlightInfoByFlightNumber>' +
   '</soapenv:Body>' +
   '</soapenv:Envelope>';
@@ -123,7 +123,8 @@ request(requestOptions, function (error, response, body) {
   //     }
   // }
   var y = NodeById.childNodes[0];
-  console.log(y.nodeValue);
+  var z = y.nodeValue;
+  console.log(z);
 } //else
 
     //json is converted xml
