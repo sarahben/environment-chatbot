@@ -386,29 +386,41 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
 // Fontion dans laquelle est géré le traitement de la récupération du flight number
 function sendFlightnumber(recipientId, responseText, parameters) {
   let flight_number = parameters.flight.replace(/\s+/g, '');
+  var requestBody =
+    '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
+    'xmlns:ws="http://ws.royalairmaroc.com"> <soapenv:Header/>' +
+    '<soapenv:Body> <ws:SmsgetFlightInfoByFlightNumber>' +
+    '<ws:FlightNumber>' + flight_number +'</ws:FlightNumber>' +
+    '</ws:SmsgetFlightInfoByFlightNumber>' +
+    '</soapenv:Body>' +
+    '</soapenv:Envelope>';
 
-  var soap = require('soap');
-  var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
-  var args = {FlightNumber: flight_number};
-  // opts = {
-  //         wsdl_options: {
-  //             proxy: process.env.QUOTAGUARDSTATIC_URL
-  //         }
-  //     };
-    soap.createClient(url, function(err, client) {
-        client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args, function(err, result) {
-            console.log(result);
-            if(result != null){
-            let jsreturn = result.return;
-            console.log(jsreturn);
+  var requestHeaders = {
+    'cache-control': 'no-cache',
+    'soapaction': 'urn:SmsgetFlightInfoByFlightNumber',
+    'content-type': 'text/xml;charset=UTF-8'
+  };
 
-            let statut = jsreturn[0].statut;
-            console.log(statut);}
-        });
-    });
+  var requestOptions = {
+    'method': 'POST',
+    'url': 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl',
+    'qs': { 'wsdl': ''},
+    'proxy': 'http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293',
+    'headers': requestHeaders,
+    'body': requestBody,
+    'timeout': 5000
+  };
 
-  // });
-  sendTextMessage(recipientId, resultSoap);
+  request(requestOptions, function (error, response, body) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(body);
+     }
+  });
+
+  });
+  sendTextMessage(recipientId, body);
 }
 // Send API de FACEBOOK
 // L'API reçoit un input JSON qu'elle envoie à messenger
