@@ -111,16 +111,19 @@ var options = {
     "Host" : target.hostname
   }
 };
-// var requestOptions = {
-//   'method': 'POST',
-//   'url': vidyoApiEndpoint,
-//   'qs': { 'wsdl': ''},
-//   'headers': requestHeaders,
-//   'body': requestBody,
-//   'timeout': 5000
-// };
+var requestOptions = {
+  'method': 'POST',
+  // 'url': vidyoApiEndpoint,
+  'qs': { 'wsdl': ''},
+  'headers': requestHeaders,
+  'body': requestBody,
+  'timeout': 5000,
+  'hostname' : proxy.hostname,
+  'port' : proxy.port || 80,
+  'path' : target.href,
+};
 
-request(options, function (error, response, body) {
+request(requestOptions, function (error, response, body) {
   if (error) {
     // handle error
   } else {
