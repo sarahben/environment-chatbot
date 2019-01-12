@@ -79,6 +79,14 @@ const request = require('request');
 //   </soapenv:Body>
 // </soapenv:Envelope>;
 const parser = require('body-parser');
+const url = require('url')
+
+// const xml = fs.readFileSync('./Enveloppe.xml','utf-8')
+var quota = "http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293";
+
+var proxy = url.parse(quota);
+var target  = url.parse("http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl");
+
 var requestBody =
   '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
   'xmlns:ws="http://ws.royalairmaroc.com"> <soapenv:Header/>' +
