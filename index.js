@@ -261,6 +261,7 @@ const sendTextMessage = async (recipientId, text) => {
       text: text
     }
   };
+  console.log(messageData);
   await callSendAPI(messageData);
 }
 //If we get Action from dialogflow response, we are calling the handleApiAiAction().
