@@ -307,7 +307,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
           "title": "Staut de vol",
           "payload": "Statut de vol",
       }];
-      responseText = "coucou " + replies;
         sendQuickReply(sender.id, responseText, replies)
         break;
         case "welcome-intent-en":
@@ -348,6 +347,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
         break;
     case "Flight-number":
       sendFlightnumber(sender.id, responseText, parameters);
+      sendTextMessage(sender.id, responseText);
       break;
     default:
       //unhandled action, just send back the text
@@ -423,15 +423,14 @@ function sendFlightnumber(recipientId, responseText, parameters){
         var DOMParser = new (require('xmldom')).DOMParser;
         var doc = DOMParser.parseFromString(body);
         var NodeById = doc.getElementsByTagName('ax21:statut')[0];
-        var y = NodeById.childNodes[0];
-        var z = y.nodeValue;
+        var var_1 = NodeById.childNodes[0];
+        var var_2 = var_1.nodeValue;
         // console.log(z);
-        func_body = "coucou";
+        responseText = String(var_2);
      }
   });
-  sendTextMessage(recipientId, func_body)
   // console.log(requestBody);
-};
+}
 // Send API de FACEBOOK
 // L'API reçoit un input JSON qu'elle envoie à messenger
 function callSendAPI(messageData) {
