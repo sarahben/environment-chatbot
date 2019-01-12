@@ -387,47 +387,25 @@ const sendQuickReply = async (recipientId, text, replies, metadata) => {
 function sendFlightnumber(recipientId, responseText, parameters) {
   let flight_number = parameters.flight.replace(/\s+/g, '');
 
-  var http, options, proxy, url, target;
+  var soap = require('soap');
+  var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
+  var args = {FlightNumber: flight_number};
+  // opts = {
+  //         wsdl_options: {
+  //             proxy: process.env.QUOTAGUARDSTATIC_URL
+  //         }
+  //     };
+    soap.createClient(url, function(err, client) {
+        client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args, function(err, result) {
+            console.log(result);
+            if(result != null){
+            let jsreturn = result.return;
+            console.log(jsreturn);
 
-  http = require("http");
-  url = require("url");
-  let quota = "http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293";
-  proxy = url.parse(quota);
-  target  = url.parse("http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl");
-
-  options = {
-    hostname: proxy.hostname,
-    port: proxy.port || 80,
-    path: target.href,
-    headers: {
-      "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
-      "Host" : target.hostname
-    }
-  };
-
-  // http.get(options, function(res) {
-  //   res.pipe(process.stdout);
-    // return console.log("status code", res);
-    var soap = require('soap');
-    var wsdlurl = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
-    var args = {FlightNumber: 'AT424'};
-    var opts = {
-            wsdl_options: {
-                proxy: process.env.QUOTAGUARDSTATIC_URL
-            }
-        };
-      soap.createClient(wsdlurl, opts, function(err, client) {
-          client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args, function(err, result) {
-              console.log(result);
-              resultSoap = result;
-              // if(result != null){
-              // let jsreturn = result.return;
-              // console.log(jsreturn);
-              //
-              // let statut = jsreturn[0].statut;
-              // console.log(statut);}
-          });
-      });
+            let statut = jsreturn[0].statut;
+            console.log(statut);}
+        });
+    });
 
   // });
   sendTextMessage(recipientId, resultSoap);

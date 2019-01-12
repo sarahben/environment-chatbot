@@ -19,18 +19,89 @@
 // })
 
 
-// access an HTTP API
-'use strict';
+// // access an HTTP API
+// 'use strict';
+// var http = require("http");
+// var url = require("url");
+// var soap = require('soap');
+// var args = {FlightNumber: 'AT424'};
+//
+// var quota = "http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293";
+//
+// var proxy = url.parse(quota);
+// var target  = url.parse("http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl");
+//
+// var options = {
+//   hostname: proxy.hostname,
+//   port: proxy.port || 80,
+//   path: target.href,
+//   headers: {
+//     "Proxy-Authorization": "Basic " + (new Buffer(proxy.auth).toString("base64")),
+//     "Host" : target.hostname
+//   }
+// };
+// var opts = {
+//         wsdl_options: {
+//             proxy: process.env.QUOTAGUARDSTATIC_URL
+//         }
+//     };
+// console.log(proxy);
+// soap.createClient(options.path, opts, function(err, client) {
+//     console.log('connected');
+//     client.FlightStatus.FlightStatusHttpSoap11Endpoint.SmsgetFlightInfoByFlightNumber(args, function(err, result, body) {
+//         console.log(result);
+//         console.log("create data : ", body);
+//         if (err) {
+//           console.log(err);
+//         }
+//         // if(result != null){
+//         // let jsreturn = result.return;
+//         // console.log(jsreturn);
+//         //
+//         // let statut = jsreturn[0].statut;
+//         // console.log(statut);}
+//     });
+// });
+// // END OF access an HTTP API
+// http.get(options, function(res) {
+//   res.pipe(process.stdout);
+//   return console.log("status code", res.statusCode);
+//   });
+
+// SOAP
+// <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.royalairmaroc.com">
+//   <soapenv:Header/>
+//   <soapenv:Body>
+//      <ws:SmsgetFlightInfoByFlightNumber>
+//         <!--Optional:-->
+//         <ws:FlightNumber>AT425</ws:FlightNumber>
+//      </ws:SmsgetFlightInfoByFlightNumber>
+//   </soapenv:Body>
+// </soapenv:Envelope>;
+const request = require('request');
 var http = require("http");
 var url = require("url");
 var soap = require('soap');
 var args = {FlightNumber: 'AT424'};
-
+//
 var quota = "http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293";
-
+//
 var proxy = url.parse(quota);
 var target  = url.parse("http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl");
+var requestBody =
+  '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
+  'xmlns:ws="http://ws.royalairmaroc.com"> <soapenv:Header/>' +
+  '<soapenv:Body> <ws:SmsgetFlightInfoByFlightNumber>' +
+  '<ws:FlightNumber>AT425</ws:FlightNumber>' +
+  '</ws:SmsgetFlightInfoByFlightNumber>' +
+  '</soapenv:Body>' +
+  '</soapenv:Envelope>';
 
+var requestHeaders = {
+  'cache-control': 'no-cache',
+  'soapaction': 'addRoom',
+  'content-type': 'text/xml;charset=UTF-8'
+};
 var options = {
   hostname: proxy.hostname,
   port: proxy.port || 80,
@@ -40,30 +111,36 @@ var options = {
     "Host" : target.hostname
   }
 };
-var opts = {
-        wsdl_options: {
-            proxy: process.env.QUOTAGUARDSTATIC_URL
-        }
-    };
-console.log(proxy);
-soap.createClient(options.path, opts, function(err, client) {
-    console.log('connected');
-    client.FlightStatus.FlightStatusHttpSoap11Endpoint.SmsgetFlightInfoByFlightNumber(args, function(err, result, body) {
-        console.log(result);
-        console.log("create data : ", body);
-        if (err) {
-          console.log(err);
-        }
-        // if(result != null){
-        // let jsreturn = result.return;
-        // console.log(jsreturn);
-        //
-        // let statut = jsreturn[0].statut;
-        // console.log(statut);}
-    });
-});
+// var requestOptions = {
+//   'method': 'POST',
+//   'url': vidyoApiEndpoint,
+//   'qs': { 'wsdl': ''},
+//   'headers': requestHeaders,
+//   'body': requestBody,
+//   'timeout': 5000
+// };
 
-// http.get(options, function(res) {
-//   res.pipe(process.stdout);
-//   return console.log("status code", res.statusCode);
-//   });
+request(options, function (error, response, body) {
+  if (error) {
+    // handle error
+  } else {
+    try {
+      var parsingOptions = {
+        'object': true,
+        'sanitize': false
+      };
+      var jsonResult = parser.toJson(body, parsingOptions); // from xml
+      if(jsonResult['soapenv:Envelope']
+        ['soapenv:Body']
+        ['ns1:AddRoomResponse']
+        ['ns1:OK'] === 'OK') {
+          conferenceInfo(req, res, next, params);
+      } else {
+       // handle error
+      }
+    } catch (e) {
+      // handle error
+    }
+   }
+});//.auth(vidyoApiUsername, vidyoApiPassword);
+// you can remove this .auth if your api has no authentication
