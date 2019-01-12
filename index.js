@@ -429,7 +429,7 @@ function sendFlightnumber(recipientId, responseText, parameters){
         func_body = String(z) + "coucou";
      }
   });
-  sendTextMessage(recipientId, func_body)
+  sendTextMessage(recipientId, body)
   // console.log(requestBody);
 };
 // Send API de FACEBOOK
