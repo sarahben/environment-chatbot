@@ -279,13 +279,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       },
       {
           "content_type": "text",
-          "title": "Track bagage",
-          "payload": "Track bagage",
+          "title": "Suivi bagage",
+          "payload": "Suivi bagage",
       },
       {
           "content_type": "text",
-          "title": "Flight status",
-          "payload": "Flight status",
+          "title": "Statut vol",
+          "payload": "Statut vol",
       }];
         sendQuickReply(sender.id, responseText, replies)
         break;
