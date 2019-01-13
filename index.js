@@ -387,7 +387,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
                       "Vol : " + String(result.vol) + "\n" +
                       "Date du vol : " + String(result.date) + "\n" ;
         console.log(full_result, "testAPI_send");
-        if(result.onward){
+        if(result.onward != "null"){
           //"onward":null,"onwardFlight":null,"onwardDate":nul
           full_result = full_result + "Destination finale : " + String(result.onward) + "\n" +
                                       "Num vol de correspondance : " + String(result.onwardFlight) + "\n" +
@@ -396,7 +396,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
         };
         sendTextMessage(sender.id, full_result);
         // sendTextMessage(sender.id, result.statut);
-        fs.writeFile('./data_test.json', data, 'utf8');
+        // fs.writeFile('./data_test.json', data, 'utf8');
       })
       break;
     // Call webservice RAM flight status
