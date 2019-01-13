@@ -346,7 +346,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       console.log(text);
       console.log(tag, date_bag, name_bag, "Karim");
       //Chemin de rest
-      var path_bag = '/site/bag-status?tag=' + tag + '&flightdate=' + date_bag + '&name=' + name_bag;
+      var path_bag = 'http://trackbag.royalairmaroc.com/site/bag-status?tag=' + tag + '&flightdate=' + date_bag + '&name=' + name_bag;
       console.log(path_bag, "Baydara");
       // web service REST
       var http = require('http');
