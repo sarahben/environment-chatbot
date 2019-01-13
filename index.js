@@ -307,29 +307,29 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       },
       {
           "content_type": "text",
-          "title": "Staut de vol",
-          "payload": "Statut de vol",
+          "title": "Statut vol",
+          "payload": "Statut vol",
       }];
         sendQuickReply(sender.id, responseText, replies)
         break;
-        case "welcome-intent-en":
-          var replies = [{
-            "content_type": "text",
-            "title": "Checking",
-            "payload": "Checking",
-        },
-        {
-            "content_type": "text",
-            "title": "Track luggage",
-            "payload": "Track luggage",
-        },
-        {
-            "content_type": "text",
-            "title": "Flight status",
-            "payload": "Flight status",
-        }];
-          sendQuickReply(sender.id, responseText, replies)
-          break;
+        // case "welcome-intent-en":
+        //   var replies = [{
+        //     "content_type": "text",
+        //     "title": "Checking",
+        //     "payload": "Checking",
+        // },
+        // {
+        //     "content_type": "text",
+        //     "title": "Track luggage",
+        //     "payload": "Track luggage",
+        // },
+        // {
+        //     "content_type": "text",
+        //     "title": "Flight status",
+        //     "payload": "Flight status",
+        // }];
+        //   sendQuickReply(sender.id, responseText, replies)
+        //   break;
     // Call webservice RAM track bagage
     case "Track_luggage":
       sendTextMessage(sender.id, responseText);
