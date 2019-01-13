@@ -381,7 +381,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       Promise.all([ req1 ]).then(() => {
         console.log(result, "test3");
         data = JSON.stringify(result);
-        tag_bag_cond(result, full_result);
+        full_result = "Statut : " + String(result.statut) + "\n" +
+                      "Aeroport : " + String(result.airport) + "\n" +
+                      "Destination : " + String(result.destination) + "\n" +
+                      "Vol : " + String(result.vol) + "\n" +
+                      "Date du vol : " + String(result.date) ;
         console.log(full_result, "testAPI_send");
         sendTextMessage(sender.id, full_result);
         // sendTextMessage(sender.id, result.statut);
@@ -496,14 +500,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
   }
 }
 
-function tag_bag_cond(result, full_result){
-  full_result = "Statut : " + String(result.statut) + "\n" +
-                "Aeroport : " + String(result.airport) + "\n" +
-                "Destination : " + String(result.destination) + "\n" +
-                "Vol : " + String(result.vol) + "\n" +
-                "Date du vol : " + String(result.date) ;
-  console.log(full_result, "testAPI_concat");
-}
 const sendImageMessage = async (recipientId, imageUrl) => {
   var messageData = {
     recipient: {
