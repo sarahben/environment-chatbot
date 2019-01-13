@@ -7,19 +7,14 @@ var options = {
   method : 'GET'
 };
 
-  var body = '';
+http.request(options, function(res){
+    var body = '';
 
-callback = function(res){
-  res.on('data', function (chunk) {
-    body += chunk;
-      });
-  res.on('end', function () {
-    var result = JSON.parse(body);
-    console.log(result.statut, "Hamza");
-    console.log(req.data, "Karim");
-    console.log(body, "sara");
-  });
-}
-
-var req = http.request(options, callback).end();
-console.log(body, "================");
+    res.on('data', function (chunk) {
+      body += chunk;
+        });
+    res.on('end', function () {
+      var result = JSON.parse(body);
+      console.log(result.statut);
+    });
+}).end();

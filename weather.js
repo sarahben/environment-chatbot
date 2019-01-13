@@ -48,27 +48,5 @@ request(requestOptions, function (error, response, body) {
   var z = y.nodeValue;
   console.log(String(z) + "coucou");
 } //else
-function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-        console.log(body);
-    }
-}
 
-request(requestOptions, callback);
-    //json is converted xml
 });
-
-// var xml2js = require('xml2js');
-//
-// var parser = new xml2js.Parser();
-// //     var xml = '\
-// // <yyy:response xmlns:xxx="http://domain.com">\
-// //     <yyy:success>\
-// //         <yyy:data>some-value</yyy:data>\
-// //     </yyy:success>\
-// // </yyy:response>';ns:SmsgetFlightInfoByFlightNumberResponse ['ns:SmsgetFlightInfoByFlightNumberResponse']
-// parser.parseString(body, function (err, result) {
-// console.dir(result['soapenv:Envelope']['soapenv:Body']);
-// var niv = result['soapenv:Envelope']['soapenv:Body'];
-// console.log(niv);
-// });

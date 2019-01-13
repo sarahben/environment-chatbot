@@ -350,33 +350,41 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       console.log(path_bag, "Baydara");
       // web service REST
       var http = require('http');
+      var fs = require("fs");
+      var tmp_json = {};
+      var g_last = 0;
+      var data = {};
+      var result ;
+      var test_result;
+       //request 1
+      var req1 = new Promise((resolve, reject) => {
+        http.get(path_bag, (resp) => {
+          let data = '';
 
-      var options = {
-        host: 'trackbag.royalairmaroc.com',
-        port: 80,
-        path : path_bag,
-        method : 'GET'
-      };
-      console.log(options);
-
-      http.request(options, function(res){
-          var body = '';
-
-          res.on('data', function (chunk) {
-            body += chunk;
-              });
-          res.on('end', function () {
-            var result = JSON.parse(body);
-            console.log(body, "test");
-            console.log(result, "----------");
-            sendTextMessage(sender.id, result.statut);
-            res_bag = result;
+          resp.on('data', (chunk) => {
+            data += chunk;
           });
-          console.log(res_bag, "IN***");
-      })//.end();
 
-      console.log(res_bag, "OUT***");
-      sendTextMessage(sender.id, res_bag);
+          resp.on('end', () => {
+            tmp_json.server1 = {};
+            tmp_json.server1 = JSON.parse(data);
+            result = JSON.parse(data);
+            console.log(result.statut, "test1");
+            resolve()
+          });
+
+        }).on("error", (err) => {
+          console.log("Error: " + err.message, "testError");
+          reject(error)
+        });
+      });
+      Promise.all([ req1 ]).then(() => {
+        console.log(result, "test3");
+        data = JSON.stringify(result);
+        test_result = result;
+        sendTextMessage(sender.id, result.statut);
+        fs.writeFile('./data_test.json', data, 'utf8');
+      })
       break;
     // Call webservice RAM flight status
     case "Flight_status":
@@ -455,14 +463,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       });
       // ----- WAIT -------
       // wait((5000)); home
-      console.log(sender.id, variable_texte);
-      function callback(error, response, body) {
-          if (!error && response.statusCode == 200) {
-              console.log(body);
-          }
-      }
-      request(requestOptions, callback);
-      console.log(variable_texte, "out");
+      // console.log(sender.id, variable_texte);
+      // function callback(error, response, body) {
+      //     if (!error && response.statusCode == 200) {
+      //         console.log(body);
+      //     }
+      // }
+      // request(requestOptions, callback);
+      // console.log(variable_texte, "out");
       sendTextMessage(sender.id, variable_texte);
  //      //Send responses
  //      send(sender.id, responseText);
