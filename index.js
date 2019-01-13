@@ -274,8 +274,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
         // sendTextMessage(sender.id, responseText);
         var replies = [{
           "content_type": "text",
-          "title": "Checking",
-          "payload": "Checking",
+          "title": "Check-in",
+          "payload": "Check-in",
       },
       {
           "content_type": "text",
@@ -297,8 +297,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       case "welcome-intent-fr":
         var replies = [{
           "content_type": "text",
-          "title": "Checking",
-          "payload": "Checking",
+          "title": "Check-in",
+          "payload": "Check-in",
       },
       {
           "content_type": "text",
@@ -343,6 +343,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       var tag = res[0];
       var date_bag = res[1];
       var name_bag = res[2];
+      if(tag == null || date_bag == null || name_bag == null){
+        var handleMissing = "Verifiez votre entree !" + "\n" +
+                              "Exemple :  AT707351 09JAN LastName";
+        sendTextMessage(sender.id, handleMissing);
+      } else {
       console.log(text);
       console.log(tag, date_bag, name_bag, "Karim");
       //Chemin de rest
@@ -398,6 +403,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
         // sendTextMessage(sender.id, result.statut);
         // fs.writeFile('./data_test.json', data, 'utf8');
       })
+    }
       break;
     // Call webservice RAM flight status
     case "Flight_status":
