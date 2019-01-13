@@ -430,8 +430,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
         'qs': { 'wsdl': ''},
         'proxy': 'http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293',
         'headers': requestHeaders,
-        'body': requestBody,
-        'timeout': 5000
+        'body': requestBody
       };
 
       request(requestOptions, function (error, response, body) {
