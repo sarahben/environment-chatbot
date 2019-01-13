@@ -472,33 +472,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
                              "Date et heure d arrivee : " + String(time_arr) + "\n" ;
             // String(var_2);
             console.log(variable_texte, "sara");
+            sendTextMessage(sender.id, variable_texte);
          }
       });
-      // ----- WAIT -------
-      // wait((5000)); home
-      // console.log(sender.id, variable_texte);
-      // function callback(error, response, body) {
-      //     if (!error && response.statusCode == 200) {
-      //         console.log(body);
-      //     }
-      // }
-      // request(requestOptions, callback);
-      // console.log(variable_texte, "out");
-      sendTextMessage(sender.id, variable_texte);
- //      //Send responses
- //      send(sender.id, responseText);
- //
- //      const send = async (recipientId, responseText) => {
- //      var messageData = {
- //        recipient: {
- //          id: recipientId
- //        },
- //        message: {
- //          text: responseText
- //        }
- //      };
- //      await callSendAPI(messageData);
- // }
+      // sendTextMessage(sender.id, variable_texte);
 
       break;
     default:

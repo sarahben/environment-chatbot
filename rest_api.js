@@ -56,7 +56,7 @@ Promise.all([ req1 ]).then(() => {
   console.log(result, "test3");
   data = JSON.stringify(result);
   test_result = result;
-  // fs.writeFile('./data_test.json', data, 'utf8');
+  fs.writeFile('./data_test.json', data, 'utf8');
 })
 
 console.log(test_result, "testfinal");

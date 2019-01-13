@@ -1,45 +1,48 @@
-var request = require('request');
+const request = require('request');
 
-var options = {
-    proxy: process.env.QUOTAGUARDSTATIC_URL,
-    url: 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl',
-    headers: {
-        'User-Agent': 'node.js'
-    }
+const parser = require('body-parser');
+var body_xml = 'AT425';
+var requestBody =
+  '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
+  'xmlns:ws="http://ws.royalairmaroc.com"> <soapenv:Header/>' +
+  '<soapenv:Body> <ws:SmsgetFlightInfoByFlightNumber>' +
+  '<ws:FlightNumber>' + body_xml + '</ws:FlightNumber>' +
+  '</ws:SmsgetFlightInfoByFlightNumber>' +
+  '</soapenv:Body>' +
+  '</soapenv:Envelope>';
+
+var requestHeaders = {
+  'cache-control': 'no-cache',
+  'soapaction': 'urn:SmsgetFlightInfoByFlightNumber',
+  'content-type': 'text/xml;charset=UTF-8'
 };
 
-function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-        console.log(body);
-    } else {
-      console.log(error);
-    }
-}
+var requestOptions = {
+  'method': 'POST',
+  'url': 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl',
+  'qs': { 'wsdl': ''},
+  'proxy': 'http://38tzc6v3ms43ku:rT4elgo_oPu3fsO3sUhusgt_uQ@eu-west-static-01.quotaguard.com:9293',
+  'headers': requestHeaders,
+  // 'body': requestBody,
+  // 'timeout': 5000
+};
 
-request(options, callback);
+let req = request(requestOptions, function (error, response, body) {
+  if (error) {
+    console.log(error);
+  } else {
+//Afficher resultat
+// console.log(body);
+  var DOMParser = new (require('xmldom')).DOMParser;
+  var doc = DOMParser.parseFromString(body);
+  var NodeById = doc.getElementsByTagName('ax21:statut')[0];
 
-var soap = require('soap');
-var url = 'http://statutvolp.royalairmaroc.com/WebServiceStatutDeVol/services/FlightStatus?wsdl';
-var args = {FlightNumber: 'AT424'};
-var opts = {
-        wsdl_options: {
-            proxy: process.env.QUOTAGUARDSTATIC_URL
-        }
-    };
-  soap.createClient(url, opts, function(err, client) {
-      console.log('connected');
-      client.FlightStatus.FlightStatusHttpSoap12Endpoint.SmsgetFlightInfoByFlightNumber(args, function(err, result) {
-        if (!err){
-            console.log(result);
-        } else {
-          console.log(err); }
-          // if(result != null){
-          // let jsreturn = result.return;
-          // console.log(jsreturn);
-          //
-          // let statut = jsreturn[0].statut;
-          // console.log(statut);}
-      });
-  });
+  var y = NodeById.childNodes[0];
+  var z = y.nodeValue;
+  console.log(String(z) + "coucou");
+} //else
 
-//FlightStatusHttpSoap11Endpoint.
+});
+
+req.write(requestBody);
+req.end();
