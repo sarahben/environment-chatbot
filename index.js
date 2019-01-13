@@ -385,8 +385,15 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
                       "Aeroport : " + String(result.airport) + "\n" +
                       "Destination : " + String(result.destination) + "\n" +
                       "Vol : " + String(result.vol) + "\n" +
-                      "Date du vol : " + String(result.date) ;
+                      "Date du vol : " + String(result.date) + "\n" ;
         console.log(full_result, "testAPI_send");
+        if(result.onward){
+          //"onward":null,"onwardFlight":null,"onwardDate":nul
+          full_result = full_result + "Destination finale : " + String(result.onward) + "\n" +
+                                      "Num vol de correspondance : " + String(result.onwardFlight) + "\n" +
+                                      "Date vol de correspondance : " + String(result.onwardDate) + "\n";
+        console.log(full_result, "testAPI_onward");
+        };
         sendTextMessage(sender.id, full_result);
         // sendTextMessage(sender.id, result.statut);
         fs.writeFile('./data_test.json', data, 'utf8');
