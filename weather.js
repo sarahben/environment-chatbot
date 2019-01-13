@@ -1,7 +1,7 @@
 const request = require('request');
 
 const parser = require('body-parser');
-var body_xml = 'AT425';
+var body_xml = 'AT424';
 var requestBody =
   '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" ' +
   'xmlns:ws="http://ws.royalairmaroc.com"> <soapenv:Header/>' +
@@ -28,6 +28,7 @@ var requestOptions = {
 };
 
 request(requestOptions, function (error, response, body) {
+  //console.log(body, "Body------------------------");
   if (error) {
     console.log(error);
   } else {
@@ -36,17 +37,12 @@ request(requestOptions, function (error, response, body) {
   var DOMParser = new (require('xmldom')).DOMParser;
   var doc = DOMParser.parseFromString(body);
   var NodeById = doc.getElementsByTagName('ax21:statut')[0];
-  // console.log(NodeById);
-  // for(i = 0; i < NodeById.length; i++){
-  //   var node = NodeById.item(i);
-  //   console.log(node);
-  //     if(node.getNodeName() = 'Element'){
-  //       console.log(node.getNodeValue());
-  //     }
-  // }
+if (NodeById != null){
   var y = NodeById.childNodes[0];
   var z = y.nodeValue;
   console.log(String(z) + "coucou");
+} else {
+  console.log("vol non correct");  }
 } //else
 
 });

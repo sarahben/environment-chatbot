@@ -444,6 +444,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
         var doc = DOMParser.parseFromString(body);
         //Statut
         var NodeById = doc.getElementsByTagName('ax21:statut')[0];
+        if (NodeById != null){
             var var_1 = NodeById.childNodes[0];
             var statut_vol = var_1.nodeValue;
             // console.log
@@ -473,7 +474,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
             // String(var_2);
             console.log(variable_texte, "sara");
             sendTextMessage(sender.id, variable_texte);
+         } else {
+           var err_msg = "Entree non autorisee, merci de verifier le numero saisi"
+           sendTextMessage(sender.id, err_msg);
          }
+       }
       });
       // sendTextMessage(sender.id, variable_texte);
 
