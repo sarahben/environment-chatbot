@@ -24,8 +24,8 @@ const
   let variable_texte;
   let res_bag;
 // Sets server port and logs message on success
-// app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
-  app.listen(process.env.PORT , () => console.log('webhook is listening'));
+ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+  // app.listen(process.env.PORT , () => console.log('webhook is listening'));
 /*
  * GET
  *
@@ -275,8 +275,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
         // sendTextMessage(sender.id, responseText);
         var replies = [{
           "content_type": "text",
-          "title": "Check-in",
-          "payload": "Check-in",
+          "title": "Booking",
+          "payload": "Booking",
       },
       {
           "content_type": "text",
@@ -298,8 +298,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       case "welcome-intent-fr":
         var replies = [{
           "content_type": "text",
-          "title": "Check-in",
-          "payload": "Check-in",
+          "title": "Booking",
+          "payload": "Booking",
       },
       {
           "content_type": "text",
