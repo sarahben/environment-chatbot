@@ -274,8 +274,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
         // sendTextMessage(sender.id, responseText);
         var replies = [{
           "content_type": "text",
-          "title": "Details reservation",
-          "payload": "Details reservation",
+          "title": "Details PNR",
+          "payload": "Details PNR",
       },
       {
           "content_type": "text",
@@ -297,8 +297,8 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       case "welcome-intent-fr":
         var replies = [{
           "content_type": "text",
-          "title": "Details reservation",
-          "payload": "Details reservation",
+          "title": "Details PNR",
+          "payload": "Details PNR",
       },
       {
           "content_type": "text",
