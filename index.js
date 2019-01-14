@@ -489,30 +489,37 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
               var NodeBydepDate = doc.getElementsByTagName('depDate')[0];
                   var var_2 = NodeBydepDate.childNodes[0];
                   var depDate = var_2.nodeValue;
+                  console.log(depDate, "11111111111111111");
             //Date vol
               var NodeBydepTime = doc.getElementsByTagName('depTime')[0];
                   var var_3 = NodeBydepTime.childNodes[0];
                   var depTime = var_3.nodeValue;
+                  console.log(depTime, "222222222222222222");
             //destination
               var NodeByarrDate = doc.getElementsByTagName('arrDate')[0];
                   var var_4 = NodeByarrDate.childNodes[0];
                   var date_arrDate = var_4.nodeValue;
+                  console.log(date_arrDate, "3333333333333333333");
             //destination
               var NodeByarrTime = doc.getElementsByTagName('arrTime')[0];
                   var var_5 = NodeByarrTime.childNodes[0];
                   var date_arrTime = var_5.nodeValue;
+                  console.log(date_arrTime, "4444444444444444444");
             //date et heure d'arrivée.
               var NodeBygivenName = doc.getElementsByTagName('givenName')[0];
                   var var_6 = NodeBygivenName.childNodes[0];
                   var givenName = var_6.nodeValue;
+                  console.log(givenName, "55555555555555555555555");
           //date et heure d'arrivée.
               var NodeBysurname = doc.getElementsByTagName('surname')[0];
                   var var_7 = NodeBysurname .childNodes[0];
                   var surname = var_7.nodeValue;
+                  console.log(surname, "6666666666666666666666666");
           //date et heure d'arrivée.
               var NodeBycontrolNumber = doc.getElementsByTagName('controlNumber')[0];
                   var var_8 = NodeBycontrolNumber .childNodes[0];
                   var controlNumber = var_8.nodeValue;
+                  console.log(controlNumber, "77777777777777777777777777");
                   // variable_texte = String(statut_vol + num_vol + date_vol + date_destin + time_arr);
                   var variable_texte = "Ref de reservation : " + String(controlNumber) + "\n" +
                                        "Passager : " + String(givenName) + " " + String(surname) + "\n" +
