@@ -466,7 +466,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
             var var_4 = NodeBydestin.childNodes[0];
             var date_destin = var_4.nodeValue;
       //date et heure d'arrivée.
-        var NodeBytime = doc.getElementsByTagName('ax21:schedueldArrival')[0];
+        var NodeBytime = doc.getElementsByTagName('ax21:realArrival')[0];
             var var_5 = NodeBytime.childNodes[0];
             var time_arr = var_5.nodeValue;
 
