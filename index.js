@@ -85,8 +85,9 @@ const sessionIds = new Map();  //session DIALOGFLOW
  *
  */
 // Accepts POST requests at /webhook endpoint
-app.post('/webhook', (req, res) => {
-
+// app.post('/webhook', (req, res) => {   '*'
+  app.post('*', (req, res) => {
+    res.redirect('/webhook');
   // Return a '200 OK' response to all events
   res.status(200).send('EVENT_RECEIVED');
 
