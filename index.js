@@ -31,8 +31,9 @@ app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
  *
  */
 // Accepts GET requests at the /webhook endpoint
-app.get('/webhook', (req, res) => {
-
+// app.get('/webhook', (req, res) => {
+  app.get('*', (req, res) => {
+  res.redirect('/webhook');
   /** UPDATE YOUR VERIFY TOKEN **/
   const VERIFY_TOKEN = process.env.VERIFICATION_TOKEN;
 
@@ -86,8 +87,7 @@ const sessionIds = new Map();  //session DIALOGFLOW
  */
 // Accepts POST requests at /webhook endpoint
 // app.post('/webhook', (req, res) => {   '*'
-  app.post('*', (req, res) => {
-    res.redirect('/webhook');
+  app.post('/webhook', (req, res) => {
   // Return a '200 OK' response to all events
   res.status(200).send('EVENT_RECEIVED');
 
