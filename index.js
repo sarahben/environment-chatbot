@@ -13,8 +13,8 @@ const
   apiai = require("apiai"),
   uuid = require("uuid"),
   axios = require('axios'),
-  app = express().use(body_parser.json()); // creates express http server
-
+  app = express().use(body_parser.json()), // creates express http server
+  fs = require("fs");
 // Define global variable for message type
   let message_type;
   let resultSoap;
@@ -336,7 +336,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       console.log(path_bag, "Baydara");
       // web service REST
       var http = require('http');
-      var fs = require("fs");
+      // var fs = require("fs");  //!!!! kind reminder
       var tmp_json = {};
       var g_last = 0;
       var data = {};
