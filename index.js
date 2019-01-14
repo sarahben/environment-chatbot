@@ -313,25 +313,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       }];
         sendQuickReply(sender.id, responseText, replies)
         break;
-        // case "welcome-intent-en":
-        //   var replies = [{
-        //     "content_type": "text",
-        //     "title": "Checking",
-        //     "payload": "Checking",
-        // },
-        // {
-        //     "content_type": "text",
-        //     "title": "Track luggage",
-        //     "payload": "Track luggage",
-        // },
-        // {
-        //     "content_type": "text",
-        //     "title": "Flight status",
-        //     "payload": "Flight status",
-        // }];
-        //   sendQuickReply(sender.id, responseText, replies)
-        //   break;
-    // Call webservice RAM track bagage
     case "Track_luggage":
       sendTextMessage(sender.id, responseText);
       break;
@@ -489,6 +470,104 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
       // sendTextMessage(sender.id, variable_texte);
 
       break;
+      case "booking":
+      const fs = require('fs');
+      const path = require('path');
+      const filePath = path.join(__dirname, 'xml.xml');
+
+      fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
+          if (!err) {
+            var DOMParser = new (require('xmldom')).DOMParser;
+            var doc = DOMParser.parseFromString(data);
+            // var NodeById = doc.getElementsByTagName('companyId')[0];
+            // var y = NodeById.childNodes[0];
+            // var z = y.nodeValue;
+
+            // Num Vol
+              var NodeBydepDate = doc.getElementsByTagName('depDate')[0];
+                  var var_2 = NodeBydepDate.childNodes[0];
+                  var depDate = var_2.nodeValue;
+            //Date vol
+              var NodeBydepTime = doc.getElementsByTagName('depTime')[0];
+                  var var_3 = NodeBydepTime.childNodes[0];
+                  var depTime = var_3.nodeValue;
+            //destination
+              var NodeByarrDate = doc.getElementsByTagName('arrDate')[0];
+                  var var_4 = NodeByarrDate.childNodes[0];
+                  var date_arrDate = var_4.nodeValue;
+            //destination
+              var NodeByarrTime = doc.getElementsByTagName('arrTime')[0];
+                  var var_5 = NodeByarrTime.childNodes[0];
+                  var date_arrTime = var_5.nodeValue;
+            //date et heure d'arrivée.
+              var NodeBygivenName = doc.getElementsByTagName('givenName')[0];
+                  var var_6 = NodeBygivenName.childNodes[0];
+                  var givenName = var_6.nodeValue;
+          //date et heure d'arrivée.
+              var NodeBysurname = doc.getElementsByTagName('surname')[0];
+                  var var_7 = NodeBysurname .childNodes[0];
+                  var surname = var_7.nodeValue;
+          //date et heure d'arrivée.
+              var NodeBycontrolNumber = doc.getElementsByTagName('controlNumber')[0];
+                  var var_8 = NodeBycontrolNumber .childNodes[0];
+                  var controlNumber = var_8.nodeValue;
+                  // variable_texte = String(statut_vol + num_vol + date_vol + date_destin + time_arr);
+                  var variable_texte = "Ref de reservation : " + String(controlNumber) + "\n" +
+                                       "Passager : " + String(givenName) + " " + String(surname) + "\n" +
+                                       "Date et heure du depart : " + String(depDate) + " " + String(depTime) + "\n" +
+                                       "Date et heure d arrivee : " + String(arrDate) + " " + String(arrTime) + "\n";
+          }       sendTextMessage(sender.id, variable_texte);
+            });
+        // sendFlightnumber(sender.id, responseText, parameters)
+        // request(requestOptions, function (error, response, body) {
+        //   if (error) {
+        //     console.log(error);
+        //   } else {
+        // //Afficher resultat
+        // // console.log(body);
+        //   var DOMParser = new (require('xmldom')).DOMParser;
+        //   var doc = DOMParser.parseFromString(body);
+        //   //Statut
+        //   var NodeById = doc.getElementsByTagName('ax21:statut')[0];
+        //   if (NodeById != null){
+        //       var var_1 = NodeById.childNodes[0];
+        //       var statut_vol = var_1.nodeValue;
+        //       // console.log
+        // //Num Vol
+        //   var NodeByvol = doc.getElementsByTagName('ax21:flightNumber')[0];
+        //       var var_2 = NodeByvol.childNodes[0];
+        //       var num_vol = var_2.nodeValue;
+        // //Date vol
+        //   var NodeBydate = doc.getElementsByTagName('ax21:flightDate')[0];
+        //       var var_3 = NodeBydate.childNodes[0];
+        //       var date_vol = var_3.nodeValue;
+        // //destination
+        //   var NodeBydestin = doc.getElementsByTagName('ax21:destination')[0];
+        //       var var_4 = NodeBydestin.childNodes[0];
+        //       var date_destin = var_4.nodeValue;
+        // //date et heure d'arrivée.
+        //   var NodeBytime = doc.getElementsByTagName('ax21:realArrival')[0];
+        //       var var_5 = NodeBytime.childNodes[0];
+        //       var time_arr = var_5.nodeValue;
+        //
+        //       // variable_texte = String(statut_vol + num_vol + date_vol + date_destin + time_arr);
+        //       variable_texte = "Statut : " + String(statut_vol) + "\n" +
+        //                        "Num de vol : " + String(num_vol) + "\n" +
+        //                        "Date du vol : " + String(date_vol) + "\n" +
+        //                        "Destination : " + String(date_destin) + "\n" +
+        //                        "Date et heure d arrivee : " + String(time_arr) + "\n" ;
+        //       // String(var_2);
+        //       console.log(variable_texte, "sara");
+        //       sendTextMessage(sender.id, variable_texte);
+        //    } else {
+        //      var err_msg = "Entree non autorisee, merci de verifier le numero saisi"
+        //      sendTextMessage(sender.id, err_msg);
+        //    }
+        //  }
+        // });
+        // sendTextMessage(sender.id, variable_texte);
+
+        break;
     default:
       //unhandled action, just send back the text
       sendTextMessage(sender.id, responseText);
