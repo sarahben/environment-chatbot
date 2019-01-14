@@ -524,7 +524,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters, t
                   var variable_texte = "Ref de reservation : " + String(controlNumber) + "\n" +
                                        "Passager : " + String(givenName) + " " + String(surname) + "\n" +
                                        "Date et heure du depart : " + String(depDate) + " " + String(depTime) + "\n" +
-                                       "Date et heure d arrivee : " + String(arrDate) + " " + String(arrTime) + "\n" ;
+                                       "Date et heure d arrivee : " + String(date_arrDate) + " " + String(date_arrTime) + "\n" ;
                   console.log(variable_texte, "sarah");
           }       sendTextMessage(sender.id, variable_texte);
             });
