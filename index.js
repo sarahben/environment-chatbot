@@ -25,7 +25,7 @@ const
   let res_bag;
 // Sets server port and logs message on success
 // app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
-  app.listen(1337, () => console.log('webhook is listening'));
+  app.listen(process.env.PORT , () => console.log('webhook is listening'));
 /*
  * GET
  *
